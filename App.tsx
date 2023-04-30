@@ -16,6 +16,8 @@ import CounterTask from './components/CounterTask/CounterTask';
 import NewTask from "./components/NewTask/NewTask";
 import { Action, ContextState, State } from "./state/ContextTypes";
 import todoReducer, { ContextApp, initialState } from "./state/task-reduser";
+import { useFonts } from 'expo-font';
+
 
 export default function App () {
   const [state, changeState] = useReducer<React.Reducer<State, Action>>(todoReducer, initialState)
@@ -29,6 +31,14 @@ export default function App () {
   const allTasksIcon = <AntDesign name="bars" size={25} color="gray" />
   const activeTasksIcon = <AntDesign name='clockcircleo' size={25} color='gray' />
   const completedTasksIcon = <AntDesign name="clockcircleo" size={25} color="gray" />
+
+  const [loaded] = useFonts({
+    AntDesign: require('@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/AntDesign.ttf'),
+  });
+
+  if (!loaded) {
+    return null;
+  }
 
   return (
     <NavigationContainer>
