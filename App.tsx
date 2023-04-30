@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from "expo-status-bar";
 import { useReducer } from "react";
 import {
+  Image,
   StyleSheet,
   Text,
   View
@@ -18,7 +19,6 @@ import { Action, ContextState, State } from "./state/ContextTypes";
 import todoReducer, { ContextApp, initialState } from "./state/task-reduser";
 import { useFonts } from 'expo-font';
 
-
 export default function App () {
   const [state, changeState] = useReducer<React.Reducer<State, Action>>(todoReducer, initialState)
 
@@ -28,8 +28,8 @@ export default function App () {
   }
 
   const Stack = createBottomTabNavigator()
-  const allTasksIcon = <AntDesign name="bars" size={25} color="gray" />
-  const activeTasksIcon = <AntDesign name='clockcircleo' size={25} color='gray' />
+  
+  const activeTasksIcon = <Image style={styles.imgActive} source={require('./assets/active.png')}  />
   const completedTasksIcon = <AntDesign name="clockcircleo" size={25} color="gray" />
 
   const [loaded] = useFonts({
@@ -58,7 +58,7 @@ export default function App () {
                 <Stack.Screen name="All" component={AllTask} options={{
                   headerShown: false, tabBarIcon: () => {
                     return (
-                      allTasksIcon
+                      <Image style={styles.img} source={require('./assets/all-task-stick.png')}  />
                     )
                   }
                 }} />
@@ -72,7 +72,7 @@ export default function App () {
                 <Stack.Screen name='Completed' component={CompletedTask} options={{
                   headerShown: false, tabBarIcon: () => {
                     return (
-                      completedTasksIcon
+                      <Image style={styles.img} source={require('./assets/completed-list.png')}  />
                     )
                   }
                 }} />
@@ -123,5 +123,13 @@ const styles = StyleSheet.create({
   },
   wrapperCounter: {
 
+  },
+  img: {
+    width: 30,
+    height: 30
+  },
+  imgActive: {
+    width: 48,
+    height: 48
   }
 })
