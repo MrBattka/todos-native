@@ -28,9 +28,9 @@ export default function App () {
   }
 
   const Stack = createBottomTabNavigator()
-  
+  const allTasksIcon = <Image style={styles.img} source={require('./assets/all-task-stick.png')}  />
   const activeTasksIcon = <Image style={styles.imgActive} source={require('./assets/active.png')}  />
-  const completedTasksIcon = <AntDesign name="clockcircleo" size={25} color="gray" />
+  const completedTasksIcon = <Image style={styles.img} source={require('./assets/completed-list.png')}  />
 
   const [loaded] = useFonts({
     AntDesign: require('@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/AntDesign.ttf'),
@@ -58,7 +58,7 @@ export default function App () {
                 <Stack.Screen name="All" component={AllTask} options={{
                   headerShown: false, tabBarIcon: () => {
                     return (
-                      <Image style={styles.img} source={require('./assets/all-task-stick.png')}  />
+                      allTasksIcon
                     )
                   }
                 }} />
@@ -72,7 +72,7 @@ export default function App () {
                 <Stack.Screen name='Completed' component={CompletedTask} options={{
                   headerShown: false, tabBarIcon: () => {
                     return (
-                      <Image style={styles.img} source={require('./assets/completed-list.png')}  />
+                      completedTasksIcon
                     )
                   }
                 }} />

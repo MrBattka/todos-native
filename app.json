@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Todos",
-    "slug": "Todos",
+    "slug": "reacrNativeTutorial",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon-sticky.png",
