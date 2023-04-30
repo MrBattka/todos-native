@@ -7,7 +7,7 @@
     "icon": "./assets/icon-sticky.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/icon-sticky.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -21,7 +21,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/icon-sticky.png",
+        "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff",
         "package": "com.yourcompany.yourappname",
         "versionCode": 1
@@ -40,6 +40,7 @@
       "policy": "sdkVersion"
     },
     "updates": {
+      "runtimeVersion": "1.0.0",
       "url": "https://u.expo.dev/11b66678-d201-45a4-91da-d63ec5b58864"
     }
   }
