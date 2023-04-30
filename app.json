@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "reacrNativeTutorial",
+    "slug": "reacrNativeTutorial",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.yourcompany.yourappname",
+      "buildNumber": "1.0.0"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff",
+        "package": "com.yourcompany.yourappname",
+        "versionCode": 1
+      },
+      "package": "com.yourcompany.yourappname"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "11b66678-d201-45a4-91da-d63ec5b58864"
+      }
+    }
+  }
+}
