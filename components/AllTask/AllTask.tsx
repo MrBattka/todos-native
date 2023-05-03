@@ -1,4 +1,4 @@
-import { CheckBox, ListItem } from '@rneui/base'
+import { ListItem } from '@rneui/base'
 import React, { useCallback, useContext } from 'react'
 import { ScrollView, StyleSheet, Text, View } from 'react-native'
 import { ActionType, Task, defaultState } from '../../state/ContextTypes'

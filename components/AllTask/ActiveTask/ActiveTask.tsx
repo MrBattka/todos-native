@@ -1,13 +1,13 @@
-import React, { useCallback, useContext } from 'react'
+import { ListItem } from '@rneui/base';
+import React, { useCallback, useContext } from 'react';
 import {
     ScrollView,
     StyleSheet,
     Text,
     View
-} from "react-native"
+} from "react-native";
 import { ActionType, Task, defaultState } from '../../../state/ContextTypes';
 import { ContextApp } from '../../../state/task-reduser';
-import { CheckBox, ListItem } from '@rneui/base';
 
 const ActiveTask = () => {
 
