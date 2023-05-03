@@ -56,25 +56,28 @@ export default function App () {
               </View>
               <Stack.Navigator sceneContainerStyle={styles.wrapperNav} >
                 <Stack.Screen name="All" component={AllTask} options={{
-                  headerShown: false, tabBarIcon: () => {
-                    return (
-                      allTasksIcon
-                    )
-                  }
+                  headerShown: false, 
+                  // tabBarIcon: () => {
+                  //   return (
+                  //     allTasksIcon
+                  //   )
+                  // }
                 }} />
                 <Stack.Screen name="Active" component={ActiveTask} options={{
-                  headerShown: false, tabBarIcon: () => {
-                    return (
-                      activeTasksIcon
-                    )
-                  }
+                  headerShown: false, 
+                  // tabBarIcon: () => {
+                  //   return (
+                  //     activeTasksIcon
+                  //   )
+                  // }
                 }} />
                 <Stack.Screen name='Completed' component={CompletedTask} options={{
-                  headerShown: false, tabBarIcon: () => {
-                    return (
-                      completedTasksIcon
-                    )
-                  }
+                  headerShown: false, 
+                  // tabBarIcon: () => {
+                  //   return (
+                  //     completedTasksIcon
+                  //   )
+                  // }
                 }} />
               </Stack.Navigator>
             </View>
