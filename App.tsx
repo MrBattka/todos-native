@@ -1,5 +1,4 @@
 
-import { AntDesign } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from "expo-status-bar";
@@ -17,9 +16,8 @@ import CounterTask from './components/CounterTask/CounterTask';
 import NewTask from "./components/NewTask/NewTask";
 import { Action, ContextState, State } from "./state/ContextTypes";
 import todoReducer, { ContextApp, initialState } from "./state/task-reduser";
-import { useFonts } from 'expo-font';
 
-export default function App () {
+export default function App() {
   const [state, changeState] = useReducer<React.Reducer<State, Action>>(todoReducer, initialState)
 
   const ContextState: ContextState = {
@@ -28,17 +26,9 @@ export default function App () {
   }
 
   const Stack = createBottomTabNavigator()
-  const allTasksIcon = <Image style={styles.img} source={require('./assets/all-task-stick.png')}  />
-  const activeTasksIcon = <Image style={styles.imgActive} source={require('./assets/active.png')}  />
-  const completedTasksIcon = <Image style={styles.img} source={require('./assets/completed-list.png')}  />
-
-  const [loaded] = useFonts({
-    AntDesign: require('@expo/vector-icons/build/vendor/react-native-vector-icons/Fonts/AntDesign.ttf'),
-  });
-
-  if (!loaded) {
-    return null;
-  }
+  const allTasksIcon = <Image style={styles.img} source={require('./assets/all-task-stick.png')} />
+  const activeTasksIcon = <Image style={styles.imgActive} source={require('./assets/active.png')} />
+  const completedTasksIcon = <Image style={styles.img} source={require('./assets/completed-list.png')} />
 
   return (
     <NavigationContainer>
@@ -56,28 +46,28 @@ export default function App () {
               </View>
               <Stack.Navigator sceneContainerStyle={styles.wrapperNav} >
                 <Stack.Screen name="All" component={AllTask} options={{
-                  headerShown: false, 
-                  // tabBarIcon: () => {
-                  //   return (
-                  //     allTasksIcon
-                  //   )
-                  // }
+                  headerShown: false,
+                  tabBarIcon: () => {
+                    return (
+                      allTasksIcon
+                    )
+                  }
                 }} />
                 <Stack.Screen name="Active" component={ActiveTask} options={{
-                  headerShown: false, 
-                  // tabBarIcon: () => {
-                  //   return (
-                  //     activeTasksIcon
-                  //   )
-                  // }
+                  headerShown: false,
+                  tabBarIcon: () => {
+                    return (
+                      activeTasksIcon
+                    )
+                  }
                 }} />
                 <Stack.Screen name='Completed' component={CompletedTask} options={{
-                  headerShown: false, 
-                  // tabBarIcon: () => {
-                  //   return (
-                  //     completedTasksIcon
-                  //   )
-                  // }
+                  headerShown: false,
+                  tabBarIcon: () => {
+                    return (
+                      completedTasksIcon
+                    )
+                  }
                 }} />
               </Stack.Navigator>
             </View>
