@@ -1,6 +1,6 @@
 import { ListItem } from '@rneui/base'
 import React, { useCallback, useContext } from 'react'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { ActionType, Task, defaultState } from '../../state/ContextTypes'
 import { ContextApp } from '../../state/task-reduser'
 
@@ -24,14 +24,16 @@ const AllTask = () => {
 
                     state.tasks.map((task, i) => (
                         <View key={i} style={styles.task}>
-                            <ListItem.CheckBox
+                            {/* <ListItem.CheckBox
                                 onPress={() => toggleTask(task)}
-                                checked={task.isDone} />
-                            <View style={styles.wrapperText}>
+                                checked={task.isDone} /> */}
+                            <TouchableOpacity style={task.isDone ? styles.cmpltdTask : styles.activeTask} onPress={() => toggleTask(task)}>    
+                            </TouchableOpacity>    
+                            <TouchableOpacity onPress={() => toggleTask(task)}>
                                 <Text style={task.isDone ? styles.taskTextCmpltd : styles.taskText}>
                                     {task.taskText}
                                 </Text>
-                            </View>
+                            </TouchableOpacity>
                         </View>
                     ))}
             </ScrollView>
@@ -53,9 +55,21 @@ const styles = StyleSheet.create({
     wrapperText: {
 
     },
+    activeTask: {
+        width: 18,
+        height: 18,
+        borderRadius: 9,
+        backgroundColor: 'gray'
+    },
+    cmpltdTask: {
+        width: 18,
+        height: 18,
+        borderRadius: 9,
+        backgroundColor: '#00ff7f'
+    },
     taskTextCmpltd: {
         textDecorationLine: 'line-through',
-        color: 'gray',
+        color: '#a9a9a9',
         marginLeft: 15,
         letterSpacing: 0.4
     },

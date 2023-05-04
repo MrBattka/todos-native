@@ -1,16 +1,13 @@
-import React, { useCallback, useContext, useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native'
-import { Picker } from '@react-native-picker/picker';
-import { ContextApp } from '../../state/task-reduser';
+import React, { useCallback, useContext, useState } from 'react';
+import { Button, StyleSheet, TextInput, View } from 'react-native';
 import { ActionType } from '../../state/ContextTypes';
-import { TextInput } from 'react-native';
-import { Button } from 'react-native';
-import { TouchableOpacity } from 'react-native';
+import { ContextApp } from '../../state/task-reduser';
 import ClearCompletedTask from '../ClearCompletedTask/ClearCompletedTask';
 
 const NewTask = () => {
-    const { changeState } = useContext(ContextApp);
+    const { state, changeState } = useContext(ContextApp);
     const [text, setText] = useState('')
+    const STORAGE_KEY = '@save_text'
 
     const createTask = useCallback(
         () => {
@@ -25,8 +22,8 @@ const NewTask = () => {
 
     return (
         <View style={styles.wrapper}>
-            <View style={styles.input}>
-                <TextInput style={styles.in} onChangeText={(event) => setText(event)} value={text}
+            <View style={styles.wrapperInput}>
+                <TextInput style={styles.input} onChangeText={event => setText(event)} value={text}
                     placeholder="What needs to be done?" onSubmitEditing={createTask} />
             </View>
             <View style={styles.wrapperBtn}>
@@ -44,14 +41,14 @@ const styles = StyleSheet.create({
         margin: 5,
         justifyContent: 'space-between'
     },
-    input: {
+    wrapperInput: {
         borderWidth: 1,
-        borderRadius: 4,
+        borderRadius: 6,
         borderColor: `#1e90ff`,
         padding: 1,
         paddingLeft: 10
     },
-    in: {
+    input: {
         height: 35,
         width: 300,
         backgroundColor: 'white'
@@ -63,7 +60,7 @@ const styles = StyleSheet.create({
         maxHeight: 35,
         flex: 1,
         justifyContent: 'center',
-        marginRight: 5 
+        marginRight: 5
     },
     wrapperBtn: {
         flexDirection: 'row',

@@ -2,7 +2,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from "expo-status-bar";
-import { useReducer } from "react";
+import { useReducer, useEffect } from "react";
 import {
   Image,
   StyleSheet,
@@ -16,6 +16,7 @@ import CounterTask from './components/CounterTask/CounterTask';
 import NewTask from "./components/NewTask/NewTask";
 import { Action, ContextState, State } from "./state/ContextTypes";
 import todoReducer, { ContextApp, initialState } from "./state/task-reduser";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
   const [state, changeState] = useReducer<React.Reducer<State, Action>>(todoReducer, initialState)
@@ -25,6 +26,34 @@ export default function App() {
     changeState
   }
 
+  useEffect(() => {
+    save()
+}, [changeState])
+
+  useEffect(() => {
+    retrieveData()
+  })
+
+const retrieveData = async () => {
+    try {
+        const name = await AsyncStorage.getItem('state')
+        if (name !== null) {
+            state
+          }
+    } catch (e) {
+        console.log('Failed to load name.')
+    }
+}
+
+const save = async () => {
+    try {
+        const jsonValue = JSON.stringify(state)
+        await AsyncStorage.setItem('state', jsonValue)
+    } catch (e) {
+        console.log('Failed to save name.')
+    }
+}
+
   const Stack = createBottomTabNavigator()
   const allTasksIcon = <Image style={styles.img} source={require('./assets/all-task-stick.png')} />
   const activeTasksIcon = <Image style={styles.imgActive} source={require('./assets/active.png')} />
@@ -33,7 +62,6 @@ export default function App() {
   return (
     <NavigationContainer>
       <View style={styles.container}>
-
         <ContextApp.Provider value={ContextState}>
           <View style={styles.app}>
             <View style={styles.wrapperTitle}>
