@@ -11,16 +11,16 @@ const NewTask = ({ saveTasks, setSaveTask }: any) => {
     const { state, changeState } = useContext(ContextApp);
     const [text, setText] = useState('')
 
-    useEffect(() => {
-        save(SAVE_TODOS, state.tasks)
+    // useEffect(() => {
+    //     save(SAVE_TODOS, state.tasks)
 
-    }, [state.tasks])
+    // }, [state.tasks])
 
-    useEffect(() => {
-        let saveStore = getValueFor(SAVE_TODOS)
+    // useEffect(() => {
+    //     let saveStore = getValueFor(SAVE_TODOS)
 
-        setSaveTask(saveStore)
-    }, [])
+    //     setSaveTask(saveStore)
+    // }, [])
 
     const createTask = useCallback(
         () => {
@@ -30,7 +30,7 @@ const NewTask = ({ saveTasks, setSaveTask }: any) => {
                 changeState({ type: ActionType.ADD, payload: text })
                 setText('')
                 const newTodos = [{ text: text, isDone: false }]
-                setSaveTask([...state?.tasks, newTodos])
+                // setSaveTask([...state?.tasks, newTodos])
             }
         }, [text, changeState]
     )

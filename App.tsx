@@ -16,10 +16,12 @@ import CounterTask from './components/CounterTask/CounterTask';
 import NewTask from "./components/NewTask/NewTask";
 import { Action, ContextState, State } from "./state/ContextTypes";
 import todoReducer, { ContextApp, initialState } from "./state/task-reduser";
+import ModalWindow from './components/ModalWindow/ModalWindow';
 
 export default function App() {
   const [state, changeState] = useReducer<React.Reducer<State, Action>>(todoReducer, initialState)
   const [saveTasks, setSaveTask] = useState(null)
+  const [openSettingMode, setOpenSettingMode] = useState(false)
 
   const ContextState: ContextState = {
     state,
@@ -42,8 +44,9 @@ export default function App() {
             <View style={styles.wrapperApp}>
               <NewTask saveTasks={saveTasks} setSaveTask={setSaveTask} />
               <View style={styles.wrapperCounter}>
-                <CounterTask />
+                <CounterTask openSettingMode={openSettingMode} setOpenSettingMode={setOpenSettingMode} />
               </View>
+              {openSettingMode ?
               <Stack.Navigator sceneContainerStyle={styles.wrapperNav}>
                 <Stack.Screen name="All" component={AllTask} options={{
                   headerShown: false,
@@ -69,7 +72,8 @@ export default function App() {
                     )
                   }
                 }} />
-              </Stack.Navigator>
+              </Stack.Navigator> :
+              <ModalWindow />}
             </View>
           </View>
         </ContextApp.Provider>

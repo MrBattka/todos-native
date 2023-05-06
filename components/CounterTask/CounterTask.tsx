@@ -1,19 +1,24 @@
-import React, { useContext } from 'react'
+import React, { Dispatch, SetStateAction, useContext } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { defaultState } from '../../state/ContextTypes';
 import { ContextApp } from '../../state/task-reduser';
 
-const CounterTask = () => {
+type OpenModeType = {
+    openSettingMode: boolean
+    setOpenSettingMode: Dispatch<SetStateAction<boolean>>
+}
+
+const CounterTask = ({ openSettingMode, setOpenSettingMode }: OpenModeType) => {
     const { state = defaultState } = useContext(ContextApp);
     const taskActiveCounter = state.tasks.map(t => t.isDone).filter(t => t === false)
-
+    
     return (
         <View style={styles.counterItem}>
             <Text style={styles.txt}><Text style={styles.number}>{taskActiveCounter.length}</Text> items left </Text>
                                             {/* Setting Modal window */}
-            {/* <TouchableOpacity style={styles.wrapperSettingImg}><Image style={styles.settingImg} source={require('../../assets/setting.png')} />
+            <TouchableOpacity style={styles.wrapperSettingImg} onPress={() => setOpenSettingMode(!openSettingMode)}><Image style={styles.settingImg} source={require('../../assets/setting.png')} />
                 <Text style={styles.settingTxt}>Setting</Text>
-            </TouchableOpacity> */}
+            </TouchableOpacity>
         </View>
     )
 }
