@@ -1,13 +1,26 @@
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Button, StyleSheet, TextInput, View } from 'react-native';
-import { ActionType } from '../../state/ContextTypes';
+import { getValueFor, save } from '../../helpers/storageHelper';
+import { ActionType, Task } from '../../state/ContextTypes';
 import { ContextApp } from '../../state/task-reduser';
 import ClearCompletedTask from '../ClearCompletedTask/ClearCompletedTask';
 
-const NewTask = () => {
+const SAVE_TODOS = 'SAVE_TODOS'
+
+const NewTask = ({ saveTasks, setSaveTask }: any) => {
     const { state, changeState } = useContext(ContextApp);
     const [text, setText] = useState('')
-    const STORAGE_KEY = '@save_text'
+
+    useEffect(() => {
+        save(SAVE_TODOS, state.tasks)
+
+    }, [state.tasks])
+
+    useEffect(() => {
+        let saveStore = getValueFor(SAVE_TODOS)
+
+        setSaveTask(saveStore)
+    }, [])
 
     const createTask = useCallback(
         () => {
@@ -16,9 +29,12 @@ const NewTask = () => {
             if (text && changeState && entryBan) {
                 changeState({ type: ActionType.ADD, payload: text })
                 setText('')
+                const newTodos = [{ text: text, isDone: false }]
+                setSaveTask([...state?.tasks, newTodos])
             }
         }, [text, changeState]
     )
+
 
     return (
         <View style={styles.wrapper}>

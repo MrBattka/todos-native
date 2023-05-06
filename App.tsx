@@ -2,7 +2,7 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import { StatusBar } from "expo-status-bar";
-import { useReducer, useEffect } from "react";
+import { useReducer, useState } from "react";
 import {
   Image,
   StyleSheet,
@@ -16,43 +16,15 @@ import CounterTask from './components/CounterTask/CounterTask';
 import NewTask from "./components/NewTask/NewTask";
 import { Action, ContextState, State } from "./state/ContextTypes";
 import todoReducer, { ContextApp, initialState } from "./state/task-reduser";
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function App() {
   const [state, changeState] = useReducer<React.Reducer<State, Action>>(todoReducer, initialState)
+  const [saveTasks, setSaveTask] = useState(null)
 
   const ContextState: ContextState = {
     state,
     changeState
   }
-
-  useEffect(() => {
-    save()
-}, [changeState])
-
-  useEffect(() => {
-    retrieveData()
-  })
-
-const retrieveData = async () => {
-    try {
-        const name = await AsyncStorage.getItem('state')
-        if (name !== null) {
-            state
-          }
-    } catch (e) {
-        console.log('Failed to load name.')
-    }
-}
-
-const save = async () => {
-    try {
-        const jsonValue = JSON.stringify(state)
-        await AsyncStorage.setItem('state', jsonValue)
-    } catch (e) {
-        console.log('Failed to save name.')
-    }
-}
 
   const Stack = createBottomTabNavigator()
   const allTasksIcon = <Image style={styles.img} source={require('./assets/all-task-stick.png')} />
@@ -68,11 +40,11 @@ const save = async () => {
               <Text style={styles.title}>TODOS</Text>
             </View>
             <View style={styles.wrapperApp}>
-              <NewTask />
+              <NewTask saveTasks={saveTasks} setSaveTask={setSaveTask} />
               <View style={styles.wrapperCounter}>
                 <CounterTask />
               </View>
-              <Stack.Navigator sceneContainerStyle={styles.wrapperNav} >
+              <Stack.Navigator sceneContainerStyle={styles.wrapperNav}>
                 <Stack.Screen name="All" component={AllTask} options={{
                   headerShown: false,
                   tabBarIcon: () => {

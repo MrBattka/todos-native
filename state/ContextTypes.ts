@@ -20,7 +20,8 @@ export const defaultState: State = {
 export enum ActionType {
     ADD = 'ADD',
     REMOVE = 'REMOVE',
-    TOGGLE = 'TOGGLE'
+    TOGGLE = 'TOGGLE',
+    SAVE = 'SAVE'
 }
 
 export type ActionStringPayload = {
@@ -32,7 +33,6 @@ export type ActionObjectPayload = {
     type: ActionType.TOGGLE | ActionType.REMOVE
     payload: Task | string | boolean
 }
-
 export type Action = ActionStringPayload | ActionObjectPayload;
 
 export type ContextState = {

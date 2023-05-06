@@ -1,8 +1,9 @@
-import { ListItem } from '@rneui/base'
-import React, { useCallback, useContext } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { getValueFor, save } from '../../helpers/storageHelper'
 import { ActionType, Task, defaultState } from '../../state/ContextTypes'
 import { ContextApp } from '../../state/task-reduser'
+
 
 const AllTask = () => {
     const { state = defaultState, changeState = () => { } } = useContext(ContextApp)
@@ -21,14 +22,11 @@ const AllTask = () => {
                     <View style={styles.tasksEmpty}>
                         <Text style={styles.tasksEmptyText}>The task list is empty</Text>
                     </View> :
-
+                    
                     state.tasks.map((task, i) => (
                         <View key={i} style={styles.task}>
-                            {/* <ListItem.CheckBox
-                                onPress={() => toggleTask(task)}
-                                checked={task.isDone} /> */}
-                            <TouchableOpacity style={task.isDone ? styles.cmpltdTask : styles.activeTask} onPress={() => toggleTask(task)}>    
-                            </TouchableOpacity>    
+                            <TouchableOpacity style={task.isDone ? styles.cmpltdTask : styles.activeTask} onPress={() => toggleTask(task)}>
+                            </TouchableOpacity>
                             <TouchableOpacity onPress={() => toggleTask(task)}>
                                 <Text style={task.isDone ? styles.taskTextCmpltd : styles.taskText}>
                                     {task.taskText}

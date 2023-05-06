@@ -26,6 +26,6 @@ export const todoReducer = (state: State, action: Action): State => {
         }
         default: throw new Error('Unexpected action');
     }
-};
+}
 
 export default todoReducer

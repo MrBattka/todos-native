@@ -34,9 +34,6 @@ const ActiveTask = () => {
                     state.tasks.map((task, i) => (
                         task.isDone ? null :
                             <View key={i} style={styles.task}>
-                                {/* <ListItem.CheckBox
-                                    onPress={() => toggleTask(task)}
-                                    checked={task.isDone} /> */}
                                 <TouchableOpacity style={task.isDone ? styles.cmpltdTask : styles.activeTask}
                                     onPress={() => toggleTask(task)}>
                                 </TouchableOpacity>
