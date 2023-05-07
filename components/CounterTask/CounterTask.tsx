@@ -16,7 +16,8 @@ const CounterTask = ({ openSettingMode, setOpenSettingMode }: OpenModeType) => {
         <View style={styles.counterItem}>
             <Text style={styles.txt}><Text style={styles.number}>{taskActiveCounter.length}</Text> items left </Text>
                                             {/* Setting Modal window */}
-            <TouchableOpacity style={styles.wrapperSettingImg} onPress={() => setOpenSettingMode(!openSettingMode)}><Image style={styles.settingImg} source={require('../../assets/setting.png')} />
+            <TouchableOpacity style={styles.wrapperSettingImg} onPress={() => setOpenSettingMode(!openSettingMode)}>
+                <Image style={styles.settingImg} source={require('../../assets/setting.png')} />
                 <Text style={styles.settingTxt}>Setting</Text>
             </TouchableOpacity>
         </View>

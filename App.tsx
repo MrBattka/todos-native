@@ -22,6 +22,7 @@ export default function App() {
   const [state, changeState] = useReducer<React.Reducer<State, Action>>(todoReducer, initialState)
   const [saveTasks, setSaveTask] = useState(null)
   const [openSettingMode, setOpenSettingMode] = useState(false)
+  const [themeMode, setThemeMode] = useState(2)
 
   const ContextState: ContextState = {
     state,
@@ -35,57 +36,104 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <View style={styles.container}>
+      <View style={themeMode === 1 && styles.containerClassic ||
+        themeMode === 2 && styles.containerDark ||
+        themeMode === 3 && styles.containerColourful}>
         <ContextApp.Provider value={ContextState}>
           <View style={styles.app}>
             <View style={styles.wrapperTitle}>
               <Text style={styles.title}>TODOS</Text>
             </View>
-            <View style={styles.wrapperApp}>
+            <View style={themeMode === 1 && styles.wrapperAppClassic ||
+              themeMode === 2 && styles.wrapperAppDark ||
+              themeMode === 3 && styles.wrapperAppColourful}>
               <NewTask saveTasks={saveTasks} setSaveTask={setSaveTask} />
               <View style={styles.wrapperCounter}>
                 <CounterTask openSettingMode={openSettingMode} setOpenSettingMode={setOpenSettingMode} />
               </View>
+
               {openSettingMode ?
-              <Stack.Navigator sceneContainerStyle={styles.wrapperNav}>
-                <Stack.Screen name="All" component={AllTask} options={{
-                  headerShown: false,
-                  tabBarIcon: () => {
-                    return (
-                      allTasksIcon
-                    )
-                  }
-                }} />
-                <Stack.Screen name="Active" component={ActiveTask} options={{
-                  headerShown: false,
-                  tabBarIcon: () => {
-                    return (
-                      activeTasksIcon
-                    )
-                  }
-                }} />
-                <Stack.Screen name='Completed' component={CompletedTask} options={{
-                  headerShown: false,
-                  tabBarIcon: () => {
-                    return (
-                      completedTasksIcon
-                    )
-                  }
-                }} />
-              </Stack.Navigator> :
-              <ModalWindow />}
+
+                <ModalWindow setThemeMode={setThemeMode} /> :
+
+                <Stack.Navigator sceneContainerStyle={themeMode === 1 && styles.wrapperNavClassic ||
+                  themeMode === 2 && styles.wrapperNavDark ||
+                  themeMode === 3 && styles.wrapperNavColourful}>
+                  <Stack.Screen name="All" component={AllTask} options={{
+                    headerShown: false,
+                    tabBarStyle: {
+                      borderTopWidth: 0
+                    },
+                    tabBarLabelStyle: {
+                      fontSize: 11
+                    },
+                    tabBarInactiveBackgroundColor: themeMode === 1 && 'white' || themeMode === 2 && '#696969' || themeMode === 3 && '',
+                    tabBarActiveBackgroundColor: themeMode === 1 && 'white' || themeMode === 2 && '#D3D3D3' || themeMode === 3 && '',
+                    tabBarIcon: () => {
+                      return (
+                        allTasksIcon
+                      )
+                    }
+                  }} />
+                  <Stack.Screen name="Active" component={ActiveTask} options={{
+                    headerShown: false,
+                    tabBarStyle: {
+                      borderTopWidth: 0
+                    },
+                    tabBarLabelStyle: {
+                      fontSize: 11
+                    },
+                    tabBarInactiveBackgroundColor: themeMode === 1 && 'white' || themeMode === 2 && '#696969' || themeMode === 3 && '',
+                    tabBarActiveBackgroundColor: themeMode === 1 && 'white' || themeMode === 2 && '#D3D3D3' || themeMode === 3 && '',
+                    tabBarIcon: () => {
+                      return (
+                        activeTasksIcon
+                      )
+                    }
+                  }} />
+                  <Stack.Screen name='Completed' component={CompletedTask} options={{
+                    headerShown: false,
+                    tabBarStyle: {
+                      borderTopWidth: 0
+                    },
+                    tabBarLabelStyle: {
+                      fontSize: 11
+                    },
+                    tabBarInactiveBackgroundColor: themeMode === 1 && 'white' || themeMode === 2 && '#696969' || themeMode === 3 && '',
+                    tabBarActiveBackgroundColor: themeMode === 1 && 'white' || themeMode === 2 && '#D3D3D3' || themeMode === 3 && '',
+                    tabBarIcon: () => {
+                      return (
+                        completedTasksIcon
+                      )
+                    }
+                  }} />
+                </Stack.Navigator>}
+
             </View>
           </View>
         </ContextApp.Provider>
         <StatusBar style="light" />
-
       </View>
     </NavigationContainer>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  containerClassic: {
+    margin: 0,
+    flex: 1,
+    backgroundColor: "rgb(245, 245, 245)",
+    alignItems: "center",
+    justifyContent: 'center'
+  },
+  containerDark: {
+    margin: 0,
+    flex: 1,
+    backgroundColor: "#000000",
+    alignItems: "center",
+    justifyContent: 'center'
+  },
+  containerColourful: {
     margin: 0,
     flex: 1,
     backgroundColor: "rgb(245, 245, 245)",
@@ -105,21 +153,49 @@ const styles = StyleSheet.create({
     letterSpacing: 5,
     fontWeight: '300'
   },
-  wrapperApp: {
+  wrapperAppClassic: {
     backgroundColor: 'white',
     maxHeight: '70%',
     overflow: 'scroll',
     elevation: 5,
+    shadowColor: 'rgb(232, 217, 216)',
     borderRadius: 6,
     marginTop: 40
   },
-
-  wrapperNav: {
+  wrapperAppDark: {
+    backgroundColor: '#696969',
+    maxHeight: '70%',
+    overflow: 'scroll',
+    elevation: 5,
+    shadowColor: '',
+    borderRadius: 6,
+    marginTop: 40
+  },
+  wrapperAppColourful: {
+    backgroundColor: 'white',
+    maxHeight: '70%',
+    overflow: 'scroll',
+    elevation: 5,
+    shadowColor: 'rgb(232, 217, 216)',
+    borderRadius: 6,
+    marginTop: 40
+  },
+  wrapperNavClassic: {
     backgroundColor: 'white',
     width: '100%'
   },
-  wrapperCounter: {
+  wrapperNavDark: {
+    backgroundColor: '#696969',
+    width: '100%'
+  },
+  wrapperNavColourful: {
 
+  },
+  wrapperCounter: {
+    borderColor: 'gray',
+    borderRadius: 20,
+    borderBottomWidth: 1,
+    paddingBottom: 10
   },
   img: {
     width: 30,

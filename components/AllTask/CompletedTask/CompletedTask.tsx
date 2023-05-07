@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     },
     tasksEmpty: {
         alignItems: 'center',
-        marginTop: '25%'
+        marginTop: '15%'
     },
     tasksEmptyText: {
         color: `#a9a9a9`
@@ -82,8 +82,8 @@ const styles = StyleSheet.create({
     },
     task: {
         flexDirection: 'row',
-        marginLeft: 10,
-        marginTop: 10,
+        marginLeft: 20,
+        marginTop: 20,
         alignItems: 'center'
     }
 })

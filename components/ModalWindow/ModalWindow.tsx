@@ -1,19 +1,29 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useState } from 'react'
-import ThemeSettings from './ThemeSettings/ThemeSettings';
+import React, { Dispatch, SetStateAction, useState } from 'react'
+import ThemeSettings from './ThemeSetting/ThemeSettings';
 
-const ModalWindow = () => {
-    const [openThemeMode, setOpenThemeMode] = useState(true)
+type ThemeSelectModeType = {
+    setThemeMode: Dispatch<SetStateAction<number>>
+}
+
+const ModalWindow = ({ setThemeMode }: ThemeSelectModeType) => {
+    const [openThemeMode, setOpenThemeMode] = useState(false)
 
     return (
         <View style={styles.wrapper}>
             <Text style={styles.headerTitle}>Settings:</Text>
             <View style={styles.wrapperTheme}>
                 <Text>Theme:</Text>
-                {openThemeMode ? <TouchableOpacity style={styles.wrapperThemeBtn} onPress={() => setOpenThemeMode(!openThemeMode)}>
-                </TouchableOpacity> :
+                {openThemeMode ?
+
                     <View style={styles.modalTheme}>
-                        <ThemeSettings setOpenThemeMode={setOpenThemeMode} openThemeMode={openThemeMode} />
+                        <ThemeSettings setOpenThemeMode={setOpenThemeMode} openThemeMode={openThemeMode}
+                            setThemeMode={setThemeMode} />
+                    </View> :
+
+                    <View style={styles.wrapperThemeSquare}>
+                        <TouchableOpacity style={styles.themeSquare} onPress={() => setOpenThemeMode(!openThemeMode)}>
+                        </TouchableOpacity>
                     </View>}
             </View>
         </View>
@@ -36,12 +46,14 @@ const styles = StyleSheet.create({
         width: '60%',
         flexDirection: 'row',
     },
-    wrapperThemeBtn: {
+    wrapperThemeSquare: {
+        marginLeft: 'auto'
+    },
+    themeSquare: {
         width: 20,
         height: 20,
         borderWidth: 1,
         borderRadius: 4,
-        marginLeft: 'auto'
     },
     modalTheme: {
         marginLeft: 'auto'
