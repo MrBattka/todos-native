@@ -5,8 +5,6 @@ export const storeData = async (key: string, value: any) => {
     try {
         const jsonValue = JSON.stringify(value)
         await AsyncStorage.setItem(key, jsonValue)
-        console.log(jsonValue);
-
     } catch (e) {
         console.log('Error soring data', e);
     }
@@ -15,10 +13,10 @@ export const storeData = async (key: string, value: any) => {
 export const getData = async (key: string) => {
     try {
         const value = await AsyncStorage.getItem(key)
-        if (value !== null) {
-            return value
+        const numValue = Number(value)
+        if (numValue !== null) {
+            return numValue
         }
-        console.log(value);
 
     } catch (e) {
         console.log('Error getting data', e);

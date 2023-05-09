@@ -1,26 +1,27 @@
 import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { Button, StyleSheet, TextInput, View } from 'react-native';
 import { getValueFor, save } from '../../helpers/storageHelper';
-import { ActionType, Task } from '../../state/ContextTypes';
+import { ActionType, Task, defaultState } from '../../state/ContextTypes';
 import { ContextApp } from '../../state/task-reduser';
 import ClearCompletedTask from '../ClearCompletedTask/ClearCompletedTask';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SAVE_TODOS = 'SAVE_TODOS'
 
 const NewTask = ({ saveTasks, setSaveTask }: any) => {
-    const { state, changeState } = useContext(ContextApp);
+    const { state = defaultState, changeState = () => { } } = useContext(ContextApp);
     const [text, setText] = useState('')
 
-    // useEffect(() => {
-    //     save(SAVE_TODOS, state.tasks)
+    const storeTasks = async (arr: any) => {
+        try {
+            const jsonValue = JSON.stringify(arr)
+            await AsyncStorage.setItem('tasks', jsonValue)
+            console.log(jsonValue);
 
-    // }, [state.tasks])
-
-    // useEffect(() => {
-    //     let saveStore = getValueFor(SAVE_TODOS)
-
-    //     setSaveTask(saveStore)
-    // }, [])
+        } catch (e) {
+            console.log('Error soring data', e);
+        }
+    }
 
     const createTask = useCallback(
         () => {
@@ -29,17 +30,18 @@ const NewTask = ({ saveTasks, setSaveTask }: any) => {
             if (text && changeState && entryBan) {
                 changeState({ type: ActionType.ADD, payload: text })
                 setText('')
-                const newTodos = [{ text: text, isDone: false }]
-                // setSaveTask([...state?.tasks, newTodos])
+                const newTodos = { text: text, isDone: false }
+                storeTasks([...state.tasks, newTodos])
+                
             }
-        }, [text, changeState]
+        }, [text, changeState, storeTasks]
     )
 
 
     return (
         <View style={styles.wrapper}>
             <View style={styles.wrapperInput}>
-                <TextInput style={styles.input} onChangeText={event => setText(event)} value={text}
+                <TextInput style={styles.inputClassic} onChangeText={event => setText(event)} value={text}
                     placeholder="What needs to be done?" onSubmitEditing={createTask} />
             </View>
             <View style={styles.wrapperBtn}>
@@ -64,10 +66,16 @@ const styles = StyleSheet.create({
         padding: 1,
         paddingLeft: 10
     },
-    input: {
+    inputClassic: {
         height: 35,
         width: 300,
         backgroundColor: 'white'
+    },
+    inputDark: {
+
+    },
+    inputColourful: {
+
     },
     wrapperNewTask: {
         borderWidth: 1,

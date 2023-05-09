@@ -29,11 +29,16 @@ export type ActionStringPayload = {
     payload: string 
 }
 
+export type ActionSavePayload = {
+    type: ActionType.SAVE
+    payload: any
+}
+
 export type ActionObjectPayload = {
     type: ActionType.TOGGLE | ActionType.REMOVE
     payload: Task | string | boolean
 }
-export type Action = ActionStringPayload | ActionObjectPayload;
+export type Action = ActionStringPayload | ActionObjectPayload | ActionSavePayload;
 
 export type ContextState = {
     state: State;

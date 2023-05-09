@@ -1,26 +1,40 @@
-import React, { Dispatch, SetStateAction } from 'react'
-import { Image } from 'react-native'
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import React, { Dispatch, SetStateAction, useEffect } from 'react'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 type ThemeOpenModeType = {
     openThemeMode: boolean
+    themeMode: number
     setOpenThemeMode: Dispatch<SetStateAction<boolean>>
     setThemeMode: Dispatch<SetStateAction<number>>
 }
 
-const ThemeSettings = ({ setOpenThemeMode, openThemeMode, setThemeMode }: ThemeOpenModeType) => {
+const ThemeSettings = ({ themeMode, setOpenThemeMode, openThemeMode, setThemeMode }: ThemeOpenModeType) => {
+
+    const storeData = async (value: number) => {
+        try {
+            const jsonValue = JSON.stringify(value)
+            await AsyncStorage.setItem('theme', jsonValue)
+            console.log(jsonValue);
+        } catch (e) {
+            console.log('Error soring data', e);
+        }
+    }
 
     const handlePressClassicThemeMode = () => {
         setOpenThemeMode(!openThemeMode)
         setThemeMode(1)
+        storeData(1)
     }
     const handlePressDarkThemeMode = () => {
         setOpenThemeMode(!openThemeMode)
         setThemeMode(2)
+        storeData(2)
     }
     const handlePressColourfulThemeMode = () => {
         setOpenThemeMode(!openThemeMode)
         setThemeMode(3)
+        storeData(3)
     }
 
     return (

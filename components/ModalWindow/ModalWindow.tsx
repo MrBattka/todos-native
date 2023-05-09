@@ -3,10 +3,11 @@ import React, { Dispatch, SetStateAction, useState } from 'react'
 import ThemeSettings from './ThemeSetting/ThemeSettings';
 
 type ThemeSelectModeType = {
+    themeMode: number
     setThemeMode: Dispatch<SetStateAction<number>>
 }
 
-const ModalWindow = ({ setThemeMode }: ThemeSelectModeType) => {
+const ModalWindow = ({ themeMode, setThemeMode }: ThemeSelectModeType) => {
     const [openThemeMode, setOpenThemeMode] = useState(false)
 
     return (
@@ -18,7 +19,7 @@ const ModalWindow = ({ setThemeMode }: ThemeSelectModeType) => {
 
                     <View style={styles.modalTheme}>
                         <ThemeSettings setOpenThemeMode={setOpenThemeMode} openThemeMode={openThemeMode}
-                            setThemeMode={setThemeMode} />
+                            themeMode={themeMode} setThemeMode={setThemeMode} />
                     </View> :
 
                     <View style={styles.wrapperThemeSquare}>
