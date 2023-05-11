@@ -1,9 +1,7 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { getValueFor, save } from '../../helpers/storageHelper'
 import { ActionType, Task, defaultState } from '../../state/ContextTypes'
 import { ContextApp } from '../../state/task-reduser'
-import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 const AllTask = () => {

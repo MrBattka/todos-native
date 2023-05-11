@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from 'react';
+import React, { SetStateAction, Dispatch, useCallback, useContext, useEffect, useState } from 'react';
 import { Button, StyleSheet, TextInput, View } from 'react-native';
 import { getValueFor, save } from '../../helpers/storageHelper';
 import { ActionType, Task, defaultState } from '../../state/ContextTypes';
@@ -8,20 +8,27 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const SAVE_TODOS = 'SAVE_TODOS'
 
-const NewTask = ({ saveTasks, setSaveTask }: any) => {
+type NewTaskType = {
+    saveTasks: [],
+    setSaveTask: Dispatch<SetStateAction<[]>>
+    themeMode: number
+    setThemeMode: Dispatch<SetStateAction<number>>
+}
+
+const NewTask = ({ saveTasks, setSaveTask, themeMode, setThemeMode }: NewTaskType) => {
     const { state = defaultState, changeState = () => { } } = useContext(ContextApp);
     const [text, setText] = useState('')
 
-    const storeTasks = async (arr: any) => {
-        try {
-            const jsonValue = JSON.stringify(arr)
-            await AsyncStorage.setItem('tasks', jsonValue)
-            console.log(jsonValue);
+    // const storeTasks = async (arr: any) => {
+    //     try {
+    //         const jsonValue = JSON.stringify(arr)
+    //         await AsyncStorage.setItem('tasks', jsonValue)
+    //         console.log(jsonValue);
 
-        } catch (e) {
-            console.log('Error soring data', e);
-        }
-    }
+    //     } catch (e) {
+    //         console.log('Error soring data', e);
+    //     }
+    // }
 
     const createTask = useCallback(
         () => {
@@ -31,18 +38,21 @@ const NewTask = ({ saveTasks, setSaveTask }: any) => {
                 changeState({ type: ActionType.ADD, payload: text })
                 setText('')
                 const newTodos = { text: text, isDone: false }
-                storeTasks([...state.tasks, newTodos])
-                
-            }
-        }, [text, changeState, storeTasks]
-    )
+                // storeTasks([...state.tasks, newTodos])
 
+            }
+        }, [text, changeState]
+    )
 
     return (
         <View style={styles.wrapper}>
-            <View style={styles.wrapperInput}>
-                <TextInput style={styles.inputClassic} onChangeText={event => setText(event)} value={text}
-                    placeholder="What needs to be done?" onSubmitEditing={createTask} />
+            <View style={themeMode === 1 && styles.wrapperInputClassic || themeMode === 2 && styles.wrapperInputDark ||
+                    themeMode === 3 && styles.wrapperInputColourful}>
+                <TextInput style={themeMode === 1 && styles.inputClassic || themeMode === 2 && styles.inputDark ||
+                    themeMode === 3 && styles.inputColourful}
+                    onChangeText={event => setText(event)} value={text}
+                    placeholder="What needs to be done?" 
+                    onSubmitEditing={createTask} />
             </View>
             <View style={styles.wrapperBtn}>
                 <View style={styles.wrapperNewTask}>
@@ -59,23 +69,43 @@ const styles = StyleSheet.create({
         margin: 5,
         justifyContent: 'space-between'
     },
-    wrapperInput: {
+    wrapperInputClassic: {
         borderWidth: 1,
         borderRadius: 6,
         borderColor: `#1e90ff`,
-        padding: 1,
-        paddingLeft: 10
+        padding: 1
+    },
+    wrapperInputDark: {
+        borderWidth: 1,
+        borderRadius: 6,
+        borderColor: `#696969`,
+        padding: 1
+    },
+    wrapperInputColourful: {
+        borderRadius: 6,
+        paddingBottom: 2
     },
     inputClassic: {
         height: 35,
         width: 300,
-        backgroundColor: 'white'
+        borderRadius: 6,
+        backgroundColor: 'white',
+        paddingLeft: 10
     },
     inputDark: {
-
+        height: 35,
+        width: 300,
+        borderRadius: 6,
+        borderWidth: 0,
+        backgroundColor: '#adadad',
+        paddingLeft: 10
     },
     inputColourful: {
-
+        height: 35,
+        width: 300,
+        borderRadius: 6,
+        backgroundColor: '#f5f5f5',
+        paddingLeft: 10
     },
     wrapperNewTask: {
         borderWidth: 1,

@@ -1,6 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import React, { Dispatch, SetStateAction, useEffect } from 'react'
+import React, { Dispatch, SetStateAction, useContext, useEffect } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { ActionType, defaultState } from '../../../state/ContextTypes'
+import { ContextApp } from '../../../state/task-reduser'
 
 type ThemeOpenModeType = {
     openThemeMode: boolean
@@ -10,31 +12,34 @@ type ThemeOpenModeType = {
 }
 
 const ThemeSettings = ({ themeMode, setOpenThemeMode, openThemeMode, setThemeMode }: ThemeOpenModeType) => {
+    const { state = defaultState, changeState = () => { } } = useContext(ContextApp)
 
     const storeData = async (value: number) => {
         try {
             const jsonValue = JSON.stringify(value)
             await AsyncStorage.setItem('theme', jsonValue)
-            console.log(jsonValue);
         } catch (e) {
             console.log('Error soring data', e);
         }
     }
-
+    
     const handlePressClassicThemeMode = () => {
         setOpenThemeMode(!openThemeMode)
         setThemeMode(1)
         storeData(1)
+        changeState({type: ActionType.SELECTED_THEME, payload: 1})
     }
     const handlePressDarkThemeMode = () => {
         setOpenThemeMode(!openThemeMode)
         setThemeMode(2)
         storeData(2)
+        changeState({type: ActionType.SELECTED_THEME, payload: 2})
     }
     const handlePressColourfulThemeMode = () => {
         setOpenThemeMode(!openThemeMode)
         setThemeMode(3)
         storeData(3)
+        changeState({type: ActionType.SELECTED_THEME, payload: 3})
     }
 
     return (

@@ -4,7 +4,8 @@ import { Action, ActionType, ContextState, State } from "./ContextTypes";
 
 export const initialState: State = {
     tasks: [],
-    newTask: ''
+    newTask: '',
+    selectedTheme: 1
 }
 
 export const ContextApp = React.createContext<Partial<ContextState>>({});
@@ -27,6 +28,11 @@ export const todoReducer = (state: State, action: Action): State => {
                 ...state, tasks: state.tasks.map((task) => (
                     action.payload
                 ))
+            }
+        }
+        case ActionType.SELECTED_THEME: {
+            return {
+                ...state, selectedTheme: action.payload
             }
         }
         case ActionType.TOGGLE: {

@@ -37,38 +37,39 @@ export default function App() {
   const activeTasksIcon = <Image style={styles.imgActive} source={require('./assets/active.png')} />
   const completedTasksIcon = <Image style={styles.img} source={require('./assets/completed-list.png')} />
 
-  const getTasks = async () => {
-    try {
-        const value = await AsyncStorage.getItem('tasks')
-        if (value !== null) {
-          setSaveTask(value)
-          changeState({ type: ActionType.SAVE, payload: value })
-        }
-        console.log(value);
-    } catch (e) {
-        console.log('Error getting data', e);
-    }
-}
-useEffect(() => {
-    getTasks()
-}, [])
+  //   const getTasks = async () => {
+  //     try {
+  //         const value = await AsyncStorage.getItem('tasks')
+  //         if (value !== null) {
+  //           setSaveTask(value)
+  //           changeState({ type: ActionType.SAVE, payload: value })
+  //         }
+  //         console.log(value);
+  //     } catch (e) {
+  //         console.log('Error getting data', e);
+  //     }
+  // }
+  // useEffect(() => {
+  //     getTasks()
+  // }, [])
 
   const getData = async () => {
     try {
-        const value = await AsyncStorage.getItem('theme')
-        const numValue = Number(value)
-        if (numValue !== null) {
-            setThemeMode(numValue)
-        }
+      const value = await AsyncStorage.getItem('theme')
+      const numValue = Number(value)
+      if (numValue !== null) {
+        setThemeMode(numValue)
+        changeState({ type: ActionType.SELECTED_THEME, payload: numValue })
+      }
 
     } catch (e) {
-        console.log('Error getting data', e);
+      console.log('Error getting data', e);
     }
-}
+  }
 
-useEffect(() => {
+  useEffect(() => {
     getData()
-}, [])
+  }, [])
 
   return (
     <NavigationContainer>
@@ -84,9 +85,10 @@ useEffect(() => {
             <View style={themeMode === 1 && styles.wrapperAppClassic ||
               themeMode === 2 && styles.wrapperAppDark ||
               themeMode === 3 && styles.wrapperAppColourful}>
-              <NewTask saveTasks={saveTasks} setSaveTask={setSaveTask} />
-              <View style={styles.wrapperCounter}>
-                <CounterTask openSettingMode={openSettingMode} setOpenSettingMode={setOpenSettingMode} />
+              <NewTask themeMode={themeMode} setThemeMode={setThemeMode} saveTasks={saveTasks} setSaveTask={setSaveTask} />
+              <View style={themeMode === 2 && styles.wrapperCounterDark || styles.wrapperCounterOther}>
+                <CounterTask themeMode={themeMode} setThemeMode={setThemeMode}
+                  openSettingMode={openSettingMode} setOpenSettingMode={setOpenSettingMode} />
               </View>
 
               {openSettingMode ?
@@ -165,7 +167,7 @@ const styles = StyleSheet.create({
   containerClassic: {
     margin: 0,
     flex: 1,
-    backgroundColor: "rgb(245, 245, 245)",
+    backgroundColor: '#f5f5f5',
     alignItems: "center",
     justifyContent: 'center'
   },
@@ -247,7 +249,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#14705b',
     width: '100%'
   },
-  wrapperCounter: {
+  wrapperCounterDark: {
+    borderColor: '#b8b8b8',
+    borderRadius: 20,
+    borderBottomWidth: 1,
+    paddingBottom: 10
+  },
+  wrapperCounterOther: {
     borderColor: 'gray',
     borderRadius: 20,
     borderBottomWidth: 1,
