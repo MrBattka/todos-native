@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import React, { Dispatch, SetStateAction, useState } from 'react'
 import ThemeSettings from './ThemeSetting/ThemeSettings';
 
@@ -12,9 +12,13 @@ const ModalWindow = ({ themeMode, setThemeMode }: ThemeSelectModeType) => {
 
     return (
         <View style={styles.wrapper}>
-            <Text style={styles.headerTitle}>Settings:</Text>
+            <Text style={themeMode === 1 && styles.headerClassic ||
+                themeMode === 2 && styles.headerTitleDark ||
+                themeMode === 3 && styles.headerTitleColourful}>Settings:</Text>
             <View style={styles.wrapperTheme}>
-                <Text>Theme:</Text>
+                <Text style={themeMode === 1 && styles.settingThemeTxtClassic ||
+                    themeMode === 2 && styles.settingThemeTxtDark ||
+                    themeMode === 3 && styles.settingThemeTxtColourful}>Theme:</Text>
                 {openThemeMode ?
 
                     <View style={styles.modalTheme}>
@@ -23,7 +27,15 @@ const ModalWindow = ({ themeMode, setThemeMode }: ThemeSelectModeType) => {
                     </View> :
 
                     <View style={styles.wrapperThemeSquare}>
-                        <TouchableOpacity style={styles.themeSquare} onPress={() => setOpenThemeMode(!openThemeMode)}>
+                        <TouchableOpacity style={themeMode === 1 && styles.themeSquareClassic ||
+                            themeMode === 2 && styles.themeSquareDark ||
+                            themeMode === 3 && styles.themeSquareColourful} onPress={() => setOpenThemeMode(!openThemeMode)}>
+                            {themeMode === 1 &&
+                                <Image style={styles.gradientImg} source={require('../../assets/classic_square.png')} /> ||
+                                themeMode === 2 &&
+                                <Image style={styles.gradientImg} source={require('../../assets/dark_square.png')} /> ||
+                                themeMode === 3 &&
+                                <Image style={styles.gradientImg} source={require('../../assets/colourful_square.png')} />}
                         </TouchableOpacity>
                     </View>}
             </View>
@@ -38,9 +50,34 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         marginTop: '5%'
     },
-    headerTitle: {
+    headerClassic: {
         fontSize: 20,
-        color: 'gray'
+        color: 'gray',
+        letterSpacing: 0.6
+    },
+    headerTitleDark: {
+        fontSize: 20,
+        color: '#ededed',
+        letterSpacing: 0.6
+    },
+    headerTitleColourful: {
+        fontSize: 20,
+        color: 'white',
+        letterSpacing: 0.6
+    },
+    settingThemeTxtClassic: {
+        fontSize: 15,
+        fontWeight: '300'
+    },
+    settingThemeTxtDark: {
+        fontSize: 15,
+        color: '#dbdbd9',
+        fontWeight: '300'
+    },
+    settingThemeTxtColourful: {
+        fontSize: 15,
+        color: '#bdbdbd',
+        fontWeight: '300'
     },
     wrapperTheme: {
         marginTop: '5%',
@@ -50,11 +87,31 @@ const styles = StyleSheet.create({
     wrapperThemeSquare: {
         marginLeft: 'auto'
     },
-    themeSquare: {
-        width: 20,
-        height: 20,
+    themeSquareClassic: {
         borderWidth: 1,
+        borderColor: '#959696',
         borderRadius: 4,
+        width: 22,
+        height: 22,
+    },
+    themeSquareDark: {
+        borderColor: '#525252',
+        borderRadius: 4,
+        borderWidth: 2,
+        width: 22,
+        height: 22,
+    },
+    themeSquareColourful: {
+        borderColor: '#085240',
+        borderWidth: 2,
+        borderRadius: 4,
+        width: 22,
+        height: 22,
+    },
+    gradientImg: {
+        width: 19,
+        height: 19,
+        borderRadius: 4
     },
     modalTheme: {
         marginLeft: 'auto'

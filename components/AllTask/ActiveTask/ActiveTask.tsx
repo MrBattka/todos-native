@@ -38,7 +38,9 @@ const ActiveTask = () => {
                                     onPress={() => toggleTask(task)}>
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => toggleTask(task)}>
-                                        <Text style={styles.taskText}>{task.taskText}</Text>
+                                        <Text style={state.selectedTheme === 1 && styles.taskTextClassic ||
+                                        state.selectedTheme === 2 && styles.taskTextDark ||
+                                        state.selectedTheme === 3 && styles.taskTextColourful}>{task.taskText}</Text>
                                 </TouchableOpacity>
                             </View>
                     ))}
@@ -73,9 +75,19 @@ const styles = StyleSheet.create({
         borderRadius: 9,
         backgroundColor: '#ffd700'
     },
-    taskText: {
+    taskTextClassic: {
         marginLeft: 15,
         letterSpacing: 0.4
+    },
+    taskTextDark: {
+        marginLeft: 15,
+        letterSpacing: 0.4,
+        color: '#ededed'
+    },
+    taskTextColourful: {
+        marginLeft: 15,
+        letterSpacing: 0.4,
+        color: '#e6e8e8'
     },
     task: {
         flexDirection: 'row',

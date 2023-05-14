@@ -21,13 +21,16 @@ const AllTask = () => {
                     <View style={styles.tasksEmpty}>
                         <Text style={styles.tasksEmptyText}>The task list is empty</Text>
                     </View> :
-                    
+
                     state.tasks.map((task, i) => (
                         <View key={i} style={styles.task}>
                             <TouchableOpacity style={task.isDone ? styles.cmpltdTask : styles.activeTask} onPress={() => toggleTask(task)}>
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => toggleTask(task)}>
-                                <Text style={task.isDone ? styles.taskTextCmpltd : styles.taskText}>
+                                <Text style={task.isDone ? styles.taskTextCmpltd :
+                                    (state.selectedTheme === 1 && styles.taskTextClassic ||
+                                        state.selectedTheme === 2 && styles.taskTextDark ||
+                                        state.selectedTheme === 3 && styles.taskTextColourful)}>
                                     {task.taskText}
                                 </Text>
                             </TouchableOpacity>
@@ -70,9 +73,19 @@ const styles = StyleSheet.create({
         marginLeft: 15,
         letterSpacing: 0.4
     },
-    taskText: {
+    taskTextClassic: {
         marginLeft: 15,
         letterSpacing: 0.4
+    },
+    taskTextDark: {
+        marginLeft: 15,
+        letterSpacing: 0.4,
+        color: '#ededed'
+    },
+    taskTextColourful: {
+        marginLeft: 15,
+        letterSpacing: 0.4,
+        color: '#e6e8e8'
     },
     task: {
         flexDirection: 'row',

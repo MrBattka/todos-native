@@ -22,24 +22,24 @@ const ThemeSettings = ({ themeMode, setOpenThemeMode, openThemeMode, setThemeMod
             console.log('Error soring data', e);
         }
     }
-    
+
     const handlePressClassicThemeMode = () => {
         setOpenThemeMode(!openThemeMode)
         setThemeMode(1)
         storeData(1)
-        changeState({type: ActionType.SELECTED_THEME, payload: 1})
+        changeState({ type: ActionType.SELECTED_THEME, payload: 1 })
     }
     const handlePressDarkThemeMode = () => {
         setOpenThemeMode(!openThemeMode)
         setThemeMode(2)
         storeData(2)
-        changeState({type: ActionType.SELECTED_THEME, payload: 2})
+        changeState({ type: ActionType.SELECTED_THEME, payload: 2 })
     }
     const handlePressColourfulThemeMode = () => {
         setOpenThemeMode(!openThemeMode)
         setThemeMode(3)
         storeData(3)
-        changeState({type: ActionType.SELECTED_THEME, payload: 3})
+        changeState({ type: ActionType.SELECTED_THEME, payload: 3 })
     }
 
     return (
@@ -47,6 +47,7 @@ const ThemeSettings = ({ themeMode, setOpenThemeMode, openThemeMode, setThemeMod
             <View style={styles.wrapperThemeBtn}>
                 <View style={styles.classic}>
                     <TouchableOpacity style={styles.ThemeClassicBtn} onPress={handlePressClassicThemeMode}>
+                        <Image style={styles.gradientImg} source={require('../../../assets/classic_square.png')} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handlePressClassicThemeMode}>
                         <Text style={styles.classicTxt}>Classic</Text>
@@ -54,6 +55,7 @@ const ThemeSettings = ({ themeMode, setOpenThemeMode, openThemeMode, setThemeMod
                 </View>
                 <View style={styles.dark}>
                     <TouchableOpacity style={styles.ThemeDarkBtn} onPress={handlePressDarkThemeMode}>
+                    <Image style={styles.gradientImg} source={require('../../../assets/dark_square.png')} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handlePressDarkThemeMode}>
                         <Text style={styles.darkTxt}>Dark</Text>
@@ -61,7 +63,7 @@ const ThemeSettings = ({ themeMode, setOpenThemeMode, openThemeMode, setThemeMod
                 </View>
                 <View style={styles.colourful}>
                     <TouchableOpacity style={styles.ThemeColourfulBtn} onPress={handlePressColourfulThemeMode}>
-                        <Image style={styles.gradientImg} source={require('../../../assets/colourful-theme-gradient.jpg')} />
+                    <Image style={styles.gradientImg} source={require('../../../assets/colourful_square.png')} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handlePressColourfulThemeMode}>
                         <Text style={styles.colourfulTxt}>Colourful</Text>
@@ -75,8 +77,8 @@ const ThemeSettings = ({ themeMode, setOpenThemeMode, openThemeMode, setThemeMod
 
 const styles = StyleSheet.create({
     wrapper: {
-        width: 90,
-        height: 90,
+        width: 96,
+        height: 95,
         borderWidth: 1,
         borderColor: 'gray',
         borderRadius: 4,
@@ -86,28 +88,31 @@ const styles = StyleSheet.create({
 
     },
     ThemeClassicBtn: {
-        backgroundColor: 'white',
+        borderColor: '#959696',
         marginBottom: 10,
-        width: 20,
-        height: 20,
+        width: 22,
+        height: 22,
         borderWidth: 1,
         borderRadius: 4,
     },
     ThemeDarkBtn: {
-        backgroundColor: '#2f4f4f',
+        borderColor: '#525252',
         marginBottom: 10,
-        width: 20,
-        height: 20,
+        width: 22,
+        height: 22,
         borderWidth: 1,
         borderRadius: 4,
     },
     ThemeColourfulBtn: {
-        width: 20,
-        height: 20
+        width: 22,
+        height: 22,
+        borderColor: '#085240',
+        borderWidth: 1,
+        borderRadius: 4
     },
     gradientImg: {
-        width: 20,
-        height: 20,
+        width: 19,
+        height: 19,
         borderRadius: 4
     },
     classic: {

@@ -36,15 +36,15 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around'
     },
     txtClassic: {
-        letterSpacing: 0.6,
+        letterSpacing: 0.8,
         color: 'gray'
     },
     txtDark: {
-        letterSpacing: 0.6,
+        letterSpacing: 0.8,
         color: '#dbdbd9'
     },
     txtColourful: {
-        letterSpacing: 0.6,
+        letterSpacing: 0.8,
         color: 'white'
     },
     numberClassic: {
