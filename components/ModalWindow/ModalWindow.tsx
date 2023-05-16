@@ -45,7 +45,7 @@ const ModalWindow = ({ themeMode, setThemeMode }: ThemeSelectModeType) => {
 
 const styles = StyleSheet.create({
     wrapper: {
-        height: '80%',
+        height: '79%',
         alignItems: 'center',
         flexDirection: 'column',
         marginTop: '5%'

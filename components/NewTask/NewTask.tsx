@@ -9,8 +9,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const SAVE_TODOS = 'SAVE_TODOS'
 
 type NewTaskType = {
-    saveTasks: [],
-    setSaveTask: Dispatch<SetStateAction<[]>>
+    saveTasks: [] | null,
+    setSaveTask: Dispatch<SetStateAction<null>>
     themeMode: number
     setThemeMode: Dispatch<SetStateAction<number>>
 }
@@ -67,7 +67,7 @@ const NewTask = ({ saveTasks, setSaveTask, themeMode, setThemeMode }: NewTaskTyp
 const styles = StyleSheet.create({
     wrapper: {
         margin: 5,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
     wrapperInputClassic: {
         borderWidth: 1,
@@ -87,22 +87,22 @@ const styles = StyleSheet.create({
     },
     inputClassic: {
         height: 35,
-        width: 300,
         borderRadius: 6,
         backgroundColor: 'white',
-        paddingLeft: 10
+        paddingLeft: 10,
+        
     },
     inputDark: {
         height: 35,
-        width: 300,
+        width: '100%',
         borderRadius: 6,
         borderWidth: 0,
         backgroundColor: '#adadad',
-        paddingLeft: 10
+        paddingLeft: 10,
     },
     inputColourful: {
         height: 35,
-        width: 300,
+        width: '100%',
         borderRadius: 6,
         backgroundColor: '#f5f5f5',
         paddingLeft: 10
