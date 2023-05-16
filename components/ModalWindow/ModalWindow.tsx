@@ -12,7 +12,7 @@ const ModalWindow = ({ themeMode, setThemeMode }: ThemeSelectModeType) => {
 
     return (
         <View style={styles.wrapper}>
-            <Text style={themeMode === 1 && styles.headerClassic ||
+            <Text style={themeMode === 1 && styles.headerTitleClassic ||
                 themeMode === 2 && styles.headerTitleDark ||
                 themeMode === 3 && styles.headerTitleColourful}>Settings:</Text>
             <View style={styles.wrapperTheme}>
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         marginTop: '5%'
     },
-    headerClassic: {
+    headerTitleClassic: {
         fontSize: 20,
         color: 'gray',
         letterSpacing: 0.6
