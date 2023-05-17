@@ -40,10 +40,12 @@ export default function App() {
   const getTasks = async () => {
     try {
       const value = await AsyncStorage.getItem('tasks')
-
+      const arrValue = Array(value) 
       if (value !== null) {
-        changeState({ type: ActionType.ADD, payload: value })
+        changeState({ type: ActionType.SAVE, payload: state.tasks })
       }
+      console.log(value);
+      
     } catch (e) {
       console.log('Error getting data', e);
     }
@@ -51,6 +53,8 @@ export default function App() {
   useEffect(() => {
     getTasks()
   }, [])
+ 
+  console.log(state.tasks);
 
   const getData = async () => {
     try {

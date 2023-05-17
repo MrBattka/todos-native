@@ -25,9 +25,7 @@ export const todoReducer = (state: State, action: Action): State => {
         }
         case ActionType.SAVE: {
             return {
-                ...state, tasks: state.tasks.map((task) => (
-                    action.payload
-                ))
+                ...state, tasks: action.payload
             }
         }
         case ActionType.SELECTED_THEME: {

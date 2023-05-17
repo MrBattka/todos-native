@@ -19,11 +19,12 @@ const NewTask = ({ saveTasks, setSaveTask, themeMode, setThemeMode }: NewTaskTyp
     const { state = defaultState, changeState = () => { } } = useContext(ContextApp);
     const [text, setText] = useState('')
 
-    const storeTasks = async (text: string) => {
+    const storeTasks = async (text: any) => {
         try {
-            await AsyncStorage.setItem('tasks', text)
-            console.log(text);
-
+            const jsonValue = JSON.stringify(text)
+            await AsyncStorage.setItem('tasks', jsonValue)
+            console.log(jsonValue);
+            
         } catch (e) {
             console.log('Error soring data', e);
         }
@@ -36,19 +37,22 @@ const NewTask = ({ saveTasks, setSaveTask, themeMode, setThemeMode }: NewTaskTyp
             if (text && changeState && entryBan) {
                 changeState({ type: ActionType.ADD, payload: text })
                 setText('')
-                storeTasks(text)
+                const newState = {isDone: false, taskText: text}
+                storeTasks([...state.tasks, newState])
             }
-        }, [text, changeState]
+        }, [text, changeState, storeTasks]
     )
 
+        
+        
     return (
         <View style={styles.wrapper}>
             <View style={themeMode === 1 && styles.wrapperInputClassic || themeMode === 2 && styles.wrapperInputDark ||
-                    themeMode === 3 && styles.wrapperInputColourful}>
+                themeMode === 3 && styles.wrapperInputColourful}>
                 <TextInput style={themeMode === 1 && styles.inputClassic || themeMode === 2 && styles.inputDark ||
                     themeMode === 3 && styles.inputColourful}
                     onChangeText={event => setText(event)} value={text}
-                    placeholder="What needs to be done?" 
+                    placeholder="What needs to be done?"
                     onSubmitEditing={createTask} />
             </View>
             <View style={styles.wrapperBtn}>
@@ -87,7 +91,7 @@ const styles = StyleSheet.create({
         borderRadius: 6,
         backgroundColor: 'white',
         paddingLeft: 10,
-        
+
     },
     inputDark: {
         height: 35,
