@@ -19,16 +19,15 @@ const NewTask = ({ saveTasks, setSaveTask, themeMode, setThemeMode }: NewTaskTyp
     const { state = defaultState, changeState = () => { } } = useContext(ContextApp);
     const [text, setText] = useState('')
 
-    // const storeTasks = async (arr: any) => {
-    //     try {
-    //         const jsonValue = JSON.stringify(arr)
-    //         await AsyncStorage.setItem('tasks', jsonValue)
-    //         console.log(jsonValue);
+    const storeTasks = async (text: string) => {
+        try {
+            await AsyncStorage.setItem('tasks', text)
+            console.log(text);
 
-    //     } catch (e) {
-    //         console.log('Error soring data', e);
-    //     }
-    // }
+        } catch (e) {
+            console.log('Error soring data', e);
+        }
+    }
 
     const createTask = useCallback(
         () => {
@@ -37,9 +36,7 @@ const NewTask = ({ saveTasks, setSaveTask, themeMode, setThemeMode }: NewTaskTyp
             if (text && changeState && entryBan) {
                 changeState({ type: ActionType.ADD, payload: text })
                 setText('')
-                const newTodos = { text: text, isDone: false }
-                // storeTasks([...state.tasks, newTodos])
-
+                storeTasks(text)
             }
         }, [text, changeState]
     )

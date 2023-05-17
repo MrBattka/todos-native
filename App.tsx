@@ -37,29 +37,29 @@ export default function App() {
   const activeTasksIcon = <Image style={styles.imgActive} source={require('./assets/active.png')} />
   const completedTasksIcon = <Image style={styles.img} source={require('./assets/completed-list.png')} />
 
-  //   const getTasks = async () => {
-  //     try {
-  //         const value = await AsyncStorage.getItem('tasks')
-  //         if (value !== null) {
-  //           setSaveTask(value)
-  //           changeState({ type: ActionType.SAVE, payload: value })
-  //         }
-  //         console.log(value);
-  //     } catch (e) {
-  //         console.log('Error getting data', e);
-  //     }
-  // }
-  // useEffect(() => {
-  //     getTasks()
-  // }, [])
+  const getTasks = async () => {
+    try {
+      const value = await AsyncStorage.getItem('tasks')
+
+      if (value !== null) {
+        changeState({ type: ActionType.ADD, payload: value })
+      }
+    } catch (e) {
+      console.log('Error getting data', e);
+    }
+  }
+  useEffect(() => {
+    getTasks()
+  }, [])
 
   const getData = async () => {
     try {
       const value = await AsyncStorage.getItem('theme')
       const numValue = Number(value)
-      if (numValue !== null) {
+
+      if (numValue !== 0) {
         setThemeMode(numValue)
-        // changeState({ type: ActionType.SELECTED_THEME, payload: numValue })
+        changeState({ type: ActionType.SELECTED_THEME, payload: numValue })
       }
     } catch (e) {
       console.log('Error getting data', e);
@@ -283,8 +283,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#f5f5f5',
     alignItems: "flex-end",
     justifyContent: 'flex-end',
-    width: '100%',
-    height: '70%'
+    width: '100%'
   },
   containerDark: {
     margin: 0,
@@ -311,10 +310,11 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   wrapperTitle: {
-
+    marginTop: '10%',
+    marginBottom: '5%'
   },
   heightNav: {
-    height: '82%'
+    flex: 1
   },
   titleClassic: {
     fontSize: 50,
@@ -337,33 +337,29 @@ const styles = StyleSheet.create({
   wrapperAppClassic: {
     backgroundColor: 'white',
     overflow: 'scroll',
-    justifyContent: 'flex-end',
-    height: '80%',
+    flex: 1,
     width: '100%',
     elevation: 5,
     shadowColor: 'rgb(232, 217, 216)',
-    borderRadius: 6,
-    marginTop: 40
+    borderRadius: 6
   },
   wrapperAppDark: {
     backgroundColor: '#696969',
     overflow: 'scroll',
-    height: '80%',
+    flex: 1,
     width: '100%',
     elevation: 5,
     shadowColor: 'white',
-    borderRadius: 6,
-    marginTop: 40
+    borderRadius: 6
   },
   wrapperAppColourful: {
     backgroundColor: '#14705b',
-    height: '80%',
+    flex: 1,
     width: '100%',
     overflow: 'scroll',
     elevation: 5,
     shadowColor: '#14705b',
-    borderRadius: 6,
-    marginTop: 40
+    borderRadius: 6
   },
   wrapperNavClassic: {
     backgroundColor: 'white',

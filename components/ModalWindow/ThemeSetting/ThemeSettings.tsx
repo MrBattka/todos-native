@@ -25,7 +25,7 @@ const ThemeSettings = ({ themeMode, setOpenThemeMode, openThemeMode, setThemeMod
 
     useEffect(() => {
         storeData(themeMode)
-    }, [storeData])
+    }, [themeMode, storeData])
 
     const handlePressClassicThemeMode = () => {
         setOpenThemeMode(!openThemeMode)
