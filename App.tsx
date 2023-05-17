@@ -59,7 +59,7 @@ export default function App() {
       const numValue = Number(value)
       if (numValue !== null) {
         setThemeMode(numValue)
-        changeState({ type: ActionType.SELECTED_THEME, payload: numValue })
+        // changeState({ type: ActionType.SELECTED_THEME, payload: numValue })
       }
     } catch (e) {
       console.log('Error getting data', e);
@@ -85,7 +85,7 @@ export default function App() {
               themeMode === 2 && styles.wrapperAppDark ||
               themeMode === 3 && styles.wrapperAppColourful}>
               <NewTask themeMode={themeMode} setThemeMode={setThemeMode} saveTasks={saveTasks} setSaveTask={setSaveTask} />
-              <View style={themeMode === 2 && styles.wrapperCounterDark || styles.wrapperCounterOther}>
+              <View style={themeMode === 2 && styles.wrapperCounterDark || styles.wrapperCounterClassicAndColourful}>
                 <CounterTask themeMode={themeMode} setThemeMode={setThemeMode}
                   openSettingMode={openSettingMode} setOpenSettingMode={setOpenSettingMode} />
               </View>
@@ -152,63 +152,63 @@ export default function App() {
                         }
                       }} />
                     </Stack.Navigator>)
-                      || themeMode === 2 &&
-                      (<Stack.Navigator sceneContainerStyle={themeMode === 2 && styles.wrapperNavDark}>
-                        <Stack.Screen name="All" component={AllTask} options={{
-                          headerShown: false,
-                          tabBarStyle: {
-                            borderTopWidth: 0
-                          },
-                          tabBarLabelStyle: {
-                            fontSize: 11
-                          },
-                          tabBarInactiveBackgroundColor: '#696969',
-                          tabBarActiveBackgroundColor: '#D3D3D3',
-                          tabBarActiveTintColor: '#696969',
-                          tabBarInactiveTintColor: 'white',
-                          tabBarIcon: () => {
-                            return (
-                              allTasksIcon
-                            )
-                          }
-                        }} />
-                        <Stack.Screen name="Active" component={ActiveTask} options={{
-                          headerShown: false,
-                          tabBarStyle: {
-                            borderTopWidth: 0
-                          },
-                          tabBarLabelStyle: {
-                            fontSize: 11
-                          },
-                          tabBarInactiveBackgroundColor: '#696969',
-                          tabBarActiveBackgroundColor: '#D3D3D3',
-                          tabBarActiveTintColor: '#696969',
-                          tabBarInactiveTintColor: 'white',
-                          tabBarIcon: () => {
-                            return (
-                              activeTasksIcon
-                            )
-                          }
-                        }} />
-                        <Stack.Screen name='Completed' component={CompletedTask} options={{
-                    headerShown: false,
-                    tabBarStyle: {
-                      borderTopWidth: 0
-                    },
-                    tabBarLabelStyle: {
-                      fontSize: 11
-                    },
-                    tabBarInactiveBackgroundColor: '#696969',
-                    tabBarActiveBackgroundColor: '#D3D3D3',
-                    tabBarActiveTintColor: '#696969',
-                    tabBarInactiveTintColor:  'white',
-                    tabBarIcon: () => {
-                      return (
-                        completedTasksIcon
-                      )
-                    }
-                  }} />
-                      </Stack.Navigator>)
+                    || themeMode === 2 &&
+                    (<Stack.Navigator sceneContainerStyle={themeMode === 2 && styles.wrapperNavDark}>
+                      <Stack.Screen name="All" component={AllTask} options={{
+                        headerShown: false,
+                        tabBarStyle: {
+                          borderTopWidth: 0
+                        },
+                        tabBarLabelStyle: {
+                          fontSize: 11
+                        },
+                        tabBarInactiveBackgroundColor: '#696969',
+                        tabBarActiveBackgroundColor: '#D3D3D3',
+                        tabBarActiveTintColor: '#696969',
+                        tabBarInactiveTintColor: 'white',
+                        tabBarIcon: () => {
+                          return (
+                            allTasksIcon
+                          )
+                        }
+                      }} />
+                      <Stack.Screen name="Active" component={ActiveTask} options={{
+                        headerShown: false,
+                        tabBarStyle: {
+                          borderTopWidth: 0
+                        },
+                        tabBarLabelStyle: {
+                          fontSize: 11
+                        },
+                        tabBarInactiveBackgroundColor: '#696969',
+                        tabBarActiveBackgroundColor: '#D3D3D3',
+                        tabBarActiveTintColor: '#696969',
+                        tabBarInactiveTintColor: 'white',
+                        tabBarIcon: () => {
+                          return (
+                            activeTasksIcon
+                          )
+                        }
+                      }} />
+                      <Stack.Screen name='Completed' component={CompletedTask} options={{
+                        headerShown: false,
+                        tabBarStyle: {
+                          borderTopWidth: 0
+                        },
+                        tabBarLabelStyle: {
+                          fontSize: 11
+                        },
+                        tabBarInactiveBackgroundColor: '#696969',
+                        tabBarActiveBackgroundColor: '#D3D3D3',
+                        tabBarActiveTintColor: '#696969',
+                        tabBarInactiveTintColor: 'white',
+                        tabBarIcon: () => {
+                          return (
+                            completedTasksIcon
+                          )
+                        }
+                      }} />
+                    </Stack.Navigator>)
                     || themeMode === 3 &&
                     (<Stack.Navigator sceneContainerStyle={themeMode === 3 && styles.wrapperNavColourful}>
                       <Stack.Screen name="All" component={AllTask} options={{
@@ -266,7 +266,7 @@ export default function App() {
                         }
                       }} />
                     </Stack.Navigator>)}
-                  </View>}
+                </View>}
             </View>
           </View>
         </ContextApp.Provider>
@@ -383,7 +383,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingBottom: 10
   },
-  wrapperCounterOther: {
+  wrapperCounterClassicAndColourful: {
     borderColor: 'gray',
     borderRadius: 20,
     borderBottomWidth: 1,
