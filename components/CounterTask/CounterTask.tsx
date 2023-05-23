@@ -12,6 +12,7 @@ type OpenModeType = {
 
 const CounterTask = ({ openSettingMode, setOpenSettingMode, themeMode, setThemeMode }: OpenModeType) => {
     const { state = defaultState } = useContext(ContextApp);
+    
     const taskActiveCounter = state.tasks.map(t => t.isDone).filter(t => t === false)
 
     return (

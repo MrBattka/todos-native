@@ -40,21 +40,25 @@ export default function App() {
   const getTasks = async () => {
     try {
       const value = await AsyncStorage.getItem('tasks')
-      const arrValue = Array(value) 
+      // const arrValue = value.replace(/^"(.*)"$/, '$1')
+      const arrValue = value?.slice(1, -1)
+      const result = JSON.parse('[' + arrValue + ']')
       if (value !== null) {
-        changeState({ type: ActionType.SAVE, payload: state.tasks })
+        changeState({ type: ActionType.SAVE, payload: result })
       }
-      console.log(value);
+      console.log(typeof arrValue);
       
     } catch (e) {
       console.log('Error getting data', e);
     }
   }
+  state.tasks.map(t => t)
+  
   useEffect(() => {
     getTasks()
   }, [])
- 
   console.log(state.tasks);
+  
 
   const getData = async () => {
     try {

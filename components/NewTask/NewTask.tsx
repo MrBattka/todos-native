@@ -18,6 +18,7 @@ type NewTaskType = {
 const NewTask = ({ saveTasks, setSaveTask, themeMode, setThemeMode }: NewTaskType) => {
     const { state = defaultState, changeState = () => { } } = useContext(ContextApp);
     const [text, setText] = useState('')
+    const [done, setDone] = useState(false)
 
     const storeTasks = async (text: any) => {
         try {
@@ -37,13 +38,11 @@ const NewTask = ({ saveTasks, setSaveTask, themeMode, setThemeMode }: NewTaskTyp
             if (text && changeState && entryBan) {
                 changeState({ type: ActionType.ADD, payload: text })
                 setText('')
-                const newState = {isDone: false, taskText: text}
+                const newState = {isDone: done, taskText: text}
                 storeTasks([...state.tasks, newState])
             }
         }, [text, changeState, storeTasks]
     )
-
-        
         
     return (
         <View style={styles.wrapper}>
