@@ -14,7 +14,7 @@ export const todoReducer = (state: State, action: Action): State => {
     switch (action.type) {
         case ActionType.ADD: {
             return {
-                ...state, newTask: action.payload, tasks: [...state.tasks, {
+                ...state, tasks: [...state.tasks, {
                     taskText: action.payload,
                     isDone: false
                 }]
@@ -25,7 +25,7 @@ export const todoReducer = (state: State, action: Action): State => {
         }
         case ActionType.SAVE: {
             return {
-                ...state,  tasks: action.payload
+                ...state, tasks: action.payload
             }
         }
         case ActionType.SELECTED_THEME: {

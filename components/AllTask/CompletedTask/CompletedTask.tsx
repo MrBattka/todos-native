@@ -1,7 +1,6 @@
-import { ListItem } from '@rneui/base';
 import React, { useCallback, useContext } from 'react';
 
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { ActionType, Task, defaultState } from '../../../state/ContextTypes';
 import { ContextApp } from '../../../state/task-reduser';
 
@@ -17,6 +16,9 @@ const CompletedTask = () => {
         }, [changeState]
     )
 
+    const completedTaskLight = <Image style={styles.img} source={require('../../../assets/completedTaskDark.png')} />
+    const completedTaskDark = <Image style={styles.img} source={require('../../../assets/completedTask.png')} />
+
     return (
         <View style={styles.wrapper}>
             <ScrollView>
@@ -29,8 +31,9 @@ const CompletedTask = () => {
                     state.tasks.map((task, i) => (
                         !task.isDone ? null :
                             <View key={i} style={styles.task}>
-                                <TouchableOpacity style={task.isDone ? styles.cmpltdTask : styles.activeTask}
-                                    onPress={() => toggleTask(task)}>
+                                <TouchableOpacity onPress={() => toggleTask(task)}>
+                                    {state.selectedTheme === 1 && completedTaskDark || state.selectedTheme === 2 && completedTaskLight ||
+                                    state.selectedTheme === 3 && completedTaskLight}
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => toggleTask(task)}>
                                     <Text style={task.isDone ? styles.taskTextCmpltd :
@@ -60,6 +63,10 @@ const styles = StyleSheet.create({
     },
     wrapperText: {
 
+    },
+    img: {
+        width: 37,
+        height: 21
     },
     activeTask: {
         width: 18,

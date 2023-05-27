@@ -1,5 +1,5 @@
 import React, { useCallback, useContext } from 'react'
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { ActionType, Task, defaultState } from '../../state/ContextTypes'
 import { ContextApp } from '../../state/task-reduser'
 
@@ -8,10 +8,15 @@ const AllTask = () => {
     const { state = defaultState, changeState = () => { } } = useContext(ContextApp)
 
     const toggleTask = useCallback(
-        (taskForChange: Task) => {
+        async (taskForChange: Task) => {
             changeState({ type: ActionType.TOGGLE, payload: taskForChange })
         }, [changeState]
     )
+
+    const activeTaskLight = <Image style={styles.img} source={require('../../assets/activeTaskDark.png')} />
+    const completedTaskLight = <Image style={styles.img} source={require('../../assets/completedTaskDark.png')} />
+    const activeTaskDark = <Image style={styles.img} source={require('../../assets/activeTask.png')} />
+    const completedTaskDark = <Image style={styles.img} source={require('../../assets/completedTask.png')} />
 
     return (
         <View style={styles.wrapper}>
@@ -21,10 +26,12 @@ const AllTask = () => {
                     <View style={styles.tasksEmpty}>
                         <Text style={styles.tasksEmptyText}>The task list is empty</Text>
                     </View> :
-
                     state.tasks.map((task, i) => (
                         <View key={i} style={styles.task}>
-                            <TouchableOpacity style={task.isDone ? styles.cmpltdTask : styles.activeTask} onPress={() => toggleTask(task)}>
+                            <TouchableOpacity onPress={() => toggleTask(task)}>
+                                {!task.isDone ? state.selectedTheme === 1 ? activeTaskDark :
+                                    activeTaskLight : state.selectedTheme ===1 ? completedTaskDark :
+                                    completedTaskLight}
                             </TouchableOpacity>
                             <TouchableOpacity onPress={() => toggleTask(task)}>
                                 <Text style={task.isDone ? styles.taskTextCmpltd :
@@ -54,6 +61,10 @@ const styles = StyleSheet.create({
     },
     wrapperText: {
 
+    },
+    img: {
+        width: 37,
+        height: 21
     },
     activeTask: {
         width: 18,

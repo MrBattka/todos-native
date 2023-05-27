@@ -1,6 +1,6 @@
-import { ListItem } from '@rneui/base';
 import React, { useCallback, useContext } from 'react';
 import {
+    Image,
     ScrollView,
     StyleSheet,
     Text,
@@ -22,6 +22,9 @@ const ActiveTask = () => {
         }, [changeState]
     )
 
+    const activeTaskLight = <Image style={styles.img} source={require('../../../assets/activeTaskDark.png')} />
+    const activeTaskDark = <Image style={styles.img} source={require('../../../assets/activeTask.png')} />
+
     return (
         <View style={styles.wrapper}>
             <ScrollView>
@@ -34,11 +37,12 @@ const ActiveTask = () => {
                     state.tasks.map((task, i) => (
                         task.isDone ? null :
                             <View key={i} style={styles.task}>
-                                <TouchableOpacity style={task.isDone ? styles.cmpltdTask : styles.activeTask}
-                                    onPress={() => toggleTask(task)}>
+                                <TouchableOpacity onPress={() => toggleTask(task)}>
+                                {state.selectedTheme === 1 && activeTaskDark || state.selectedTheme === 2 && activeTaskLight ||
+                                    state.selectedTheme === 3 && activeTaskLight}
                                 </TouchableOpacity>
                                 <TouchableOpacity onPress={() => toggleTask(task)}>
-                                        <Text style={state.selectedTheme === 1 && styles.taskTextClassic ||
+                                    <Text style={state.selectedTheme === 1 && styles.taskTextClassic ||
                                         state.selectedTheme === 2 && styles.taskTextDark ||
                                         state.selectedTheme === 3 && styles.taskTextColourful}>{task.taskText}</Text>
                                 </TouchableOpacity>
@@ -62,6 +66,10 @@ const styles = StyleSheet.create({
     },
     wrapperText: {
 
+    },
+    img: {
+        width: 37,
+        height: 21
     },
     activeTask: {
         width: 18,

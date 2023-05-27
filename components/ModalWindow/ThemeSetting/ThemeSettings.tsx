@@ -1,5 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import React, { Dispatch, SetStateAction, useContext, useEffect } from 'react'
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { ActionType, defaultState } from '../../../state/ContextTypes'
 import { ContextApp } from '../../../state/task-reduser'
@@ -13,6 +13,7 @@ type ThemeOpenModeType = {
 
 const ThemeSettings = ({ themeMode, setOpenThemeMode, openThemeMode, setThemeMode }: ThemeOpenModeType) => {
     const { state = defaultState, changeState = () => { } } = useContext(ContextApp)
+    const [activeTheme, setActiveTheme] = useState(themeMode)
 
     const storeData = async (value: number) => {
         try {
@@ -50,27 +51,30 @@ const ThemeSettings = ({ themeMode, setOpenThemeMode, openThemeMode, setThemeMod
         <View style={styles.wrapper}>
             <View style={styles.wrapperThemeBtn}>
                 <View style={styles.classic}>
-                    <TouchableOpacity style={styles.ThemeClassicBtn} onPress={handlePressClassicThemeMode}>
+                    <TouchableOpacity style={themeMode === 1 ? styles.activeThemeBtnClassic : styles.ThemeClassicBtn}
+                        onPress={handlePressClassicThemeMode}>
                         <Image style={styles.gradientImg} source={require('../../../assets/classic_square.png')} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handlePressClassicThemeMode}>
-                        <Text style={styles.classicTxt}>Classic</Text>
+                        <Text style={themeMode === 1 ? styles.activeThemeTxtClassic : styles.classicTxt}>Classic</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.dark}>
-                    <TouchableOpacity style={styles.ThemeDarkBtn} onPress={handlePressDarkThemeMode}>
-                    <Image style={styles.gradientImg} source={require('../../../assets/dark_square.png')} />
+                    <TouchableOpacity style={themeMode === 2 ? styles.activeThemeBtnDark : styles.ThemeDarkBtn}
+                        onPress={handlePressDarkThemeMode}>
+                        <Image style={styles.gradientImg} source={require('../../../assets/dark_square.png')} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handlePressDarkThemeMode}>
-                        <Text style={styles.darkTxt}>Dark</Text>
+                        <Text style={themeMode === 2 ? styles.activeThemeTxtDark : styles.darkTxt}>Dark</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={styles.colourful}>
-                    <TouchableOpacity style={styles.ThemeColourfulBtn} onPress={handlePressColourfulThemeMode}>
-                    <Image style={styles.gradientImg} source={require('../../../assets/colourful_square.png')} />
+                    <TouchableOpacity style={themeMode === 3 ? styles.activeThemeBtnColourful : styles.ThemeColourfulBtn}
+                        onPress={handlePressColourfulThemeMode}>
+                        <Image style={styles.gradientImg} source={require('../../../assets/colourful_square.png')} />
                     </TouchableOpacity>
                     <TouchableOpacity onPress={handlePressColourfulThemeMode}>
-                        <Text style={styles.colourfulTxt}>Colourful</Text>
+                        <Text style={themeMode === 3 ? styles.activeThemeTxtColourful : styles.colourfulTxt}>Colourful</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -90,6 +94,46 @@ const styles = StyleSheet.create({
     },
     wrapperThemeBtn: {
 
+    },
+    activeThemeTxtClassic: {
+        marginLeft: 3,
+        color: '#1e90ff',
+    },
+    activeThemeTxtDark: {
+        marginLeft: 3,
+        color: '#ededed',
+        letterSpacing: 0.3,
+        fontWeight: '300'
+    },
+    activeThemeTxtColourful: {
+        marginLeft: 3,
+        color: '#e6e8e8',
+        letterSpacing: 0.3,
+        fontWeight: '300'
+    },
+    activeThemeBtnClassic: {
+        borderColor: '#1e90ff',
+        marginBottom: 10,
+        width: 22,
+        height: 22,
+        borderWidth: 1,
+        borderRadius: 4,
+    },
+    activeThemeBtnDark: {
+        borderColor: '#e6e8e8',
+        marginBottom: 10,
+        width: 22,
+        height: 22,
+        borderWidth: 0.5,
+        borderRadius: 4,
+    },
+    activeThemeBtnColourful: {
+        borderColor: '#e6e8e8',
+        marginBottom: 10,
+        width: 22,
+        height: 22,
+        borderWidth: 0.5,
+        borderRadius: 4,
     },
     ThemeClassicBtn: {
         borderColor: '#959696',
@@ -115,8 +159,8 @@ const styles = StyleSheet.create({
         borderRadius: 4
     },
     gradientImg: {
-        width: 19,
-        height: 19,
+        width: 20,
+        height: 20,
         borderRadius: 4
     },
     classic: {

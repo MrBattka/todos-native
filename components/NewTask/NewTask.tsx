@@ -9,41 +9,43 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const SAVE_TODOS = 'SAVE_TODOS'
 
 type NewTaskType = {
-    saveTasks: [] | null,
-    setSaveTask: Dispatch<SetStateAction<null>>
     themeMode: number
     setThemeMode: Dispatch<SetStateAction<number>>
 }
 
-const NewTask = ({ saveTasks, setSaveTask, themeMode, setThemeMode }: NewTaskType) => {
+const NewTask = ({ themeMode }: NewTaskType) => {
     const { state = defaultState, changeState = () => { } } = useContext(ContextApp);
     const [text, setText] = useState('')
-    const [done, setDone] = useState(false)
 
-    const storeTasks = async (text: any) => {
+    const storeTasks = async (tasks: any) => {
         try {
-            const jsonValue = JSON.stringify(text)
+            const jsonValue = JSON.stringify(tasks)
             await AsyncStorage.setItem('tasks', jsonValue)
-            console.log(jsonValue);
-            
         } catch (e) {
             console.log('Error soring data', e);
         }
     }
 
     const createTask = useCallback(
-        () => {
+        async () => {
             let entryBan = text.replace(/[^a-zа-яё0-9]/gi, '')
 
             if (text && changeState && entryBan) {
                 changeState({ type: ActionType.ADD, payload: text })
                 setText('')
-                const newState = {isDone: done, taskText: text}
-                storeTasks([...state.tasks, newState])
             }
-        }, [text, changeState, storeTasks]
+        }, [text, changeState]
     )
-        
+
+    useEffect(() => {
+        if (state.tasks !== null) {
+            const timeFunc = setTimeout(() => {
+                storeTasks(state.tasks)
+              }, 1);
+              return () => clearTimeout(timeFunc);
+        }
+    }, [storeTasks])
+
     return (
         <View style={styles.wrapper}>
             <View style={themeMode === 1 && styles.wrapperInputClassic || themeMode === 2 && styles.wrapperInputDark ||

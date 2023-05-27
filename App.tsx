@@ -23,7 +23,7 @@ export const SELECT_THEME = 'SELECT_THEME'
 
 export default function App() {
   const [state, changeState] = useReducer<React.Reducer<State, Action>>(todoReducer, initialState)
-  const [saveTasks, setSaveTask] = useState(null)
+  const [saveTasks, setSaveTask] = useState({})
   const [openSettingMode, setOpenSettingMode] = useState(false)
   const [themeMode, setThemeMode] = useState(1)
 
@@ -39,26 +39,21 @@ export default function App() {
 
   const getTasks = async () => {
     try {
-      const value = await AsyncStorage.getItem('tasks')
-      // const arrValue = value.replace(/^"(.*)"$/, '$1')
-      const arrValue = value?.slice(1, -1)
+      const tasks = await AsyncStorage.getItem('tasks')
+      const arrValue = tasks?.slice(1, -1)
       const result = JSON.parse('[' + arrValue + ']')
-      if (value !== null) {
-        changeState({ type: ActionType.SAVE, payload: result })
-      }
-      console.log(typeof arrValue);
       
-    } catch (e) {
-      console.log('Error getting data', e);
+      if (tasks !== null) {
+        changeState({ type: ActionType.SAVE, payload: result })
+      } 
+    } catch (err) {
+      console.log('Error getting data', err);
     }
   }
-  state.tasks.map(t => t)
   
   useEffect(() => {
     getTasks()
   }, [])
-  console.log(state.tasks);
-  
 
   const getData = async () => {
     try {
@@ -92,7 +87,7 @@ export default function App() {
             <View style={themeMode === 1 && styles.wrapperAppClassic ||
               themeMode === 2 && styles.wrapperAppDark ||
               themeMode === 3 && styles.wrapperAppColourful}>
-              <NewTask themeMode={themeMode} setThemeMode={setThemeMode} saveTasks={saveTasks} setSaveTask={setSaveTask} />
+              <NewTask themeMode={themeMode} setThemeMode={setThemeMode} />
               <View style={themeMode === 2 && styles.wrapperCounterDark || styles.wrapperCounterClassicAndColourful}>
                 <CounterTask themeMode={themeMode} setThemeMode={setThemeMode}
                   openSettingMode={openSettingMode} setOpenSettingMode={setOpenSettingMode} />
@@ -108,14 +103,15 @@ export default function App() {
                       <Stack.Screen name="All" component={AllTask} options={{
                         headerShown: false,
                         tabBarStyle: {
-                          borderTopWidth: 0
+                          borderTopWidth: 0,
+                          elevation: 10
                         },
                         tabBarLabelStyle: {
                           fontSize: 11
                         },
-                        tabBarInactiveBackgroundColor: 'white',
-                        tabBarActiveBackgroundColor: '#d6d6d6',
-                        tabBarActiveTintColor: 'blue',
+                        tabBarInactiveBackgroundColor: '#d6d6d6',
+                        tabBarActiveBackgroundColor: 'white',
+                        tabBarActiveTintColor: '#1e90ff',
                         tabBarInactiveTintColor: 'gray',
                         tabBarIcon: () => {
                           return (
@@ -126,14 +122,15 @@ export default function App() {
                       <Stack.Screen name="Active" component={ActiveTask} options={{
                         headerShown: false,
                         tabBarStyle: {
-                          borderTopWidth: 0
+                          borderTopWidth: 0,
+                          elevation: 10
                         },
                         tabBarLabelStyle: {
                           fontSize: 11
                         },
-                        tabBarInactiveBackgroundColor: 'white',
-                        tabBarActiveBackgroundColor: '#d6d6d6',
-                        tabBarActiveTintColor: 'blue',
+                        tabBarInactiveBackgroundColor: '#d6d6d6',
+                        tabBarActiveBackgroundColor: 'white',
+                        tabBarActiveTintColor: '#1e90ff',
                         tabBarInactiveTintColor: 'gray',
                         tabBarIcon: () => {
                           return (
@@ -144,14 +141,15 @@ export default function App() {
                       <Stack.Screen name='Completed' component={CompletedTask} options={{
                         headerShown: false,
                         tabBarStyle: {
-                          borderTopWidth: 0
+                          borderTopWidth: 0,
+                          elevation: 10
                         },
                         tabBarLabelStyle: {
                           fontSize: 11
                         },
-                        tabBarInactiveBackgroundColor: 'white',
-                        tabBarActiveBackgroundColor: '#d6d6d6',
-                        tabBarActiveTintColor: 'blue',
+                        tabBarInactiveBackgroundColor: '#d6d6d6',
+                        tabBarActiveBackgroundColor: 'white',
+                        tabBarActiveTintColor: '#1e90ff',
                         tabBarInactiveTintColor: 'gray',
                         tabBarIcon: () => {
                           return (
@@ -170,10 +168,10 @@ export default function App() {
                         tabBarLabelStyle: {
                           fontSize: 11
                         },
-                        tabBarInactiveBackgroundColor: '#696969',
-                        tabBarActiveBackgroundColor: '#D3D3D3',
-                        tabBarActiveTintColor: '#696969',
-                        tabBarInactiveTintColor: 'white',
+                        tabBarInactiveBackgroundColor: '#D3D3D3',
+                        tabBarActiveBackgroundColor: '#696969',
+                        tabBarActiveTintColor: 'white',
+                        tabBarInactiveTintColor: '#696969',
                         tabBarIcon: () => {
                           return (
                             allTasksIcon
@@ -188,10 +186,10 @@ export default function App() {
                         tabBarLabelStyle: {
                           fontSize: 11
                         },
-                        tabBarInactiveBackgroundColor: '#696969',
-                        tabBarActiveBackgroundColor: '#D3D3D3',
-                        tabBarActiveTintColor: '#696969',
-                        tabBarInactiveTintColor: 'white',
+                        tabBarInactiveBackgroundColor: '#D3D3D3',
+                        tabBarActiveBackgroundColor: '#696969',
+                        tabBarActiveTintColor: 'white',
+                        tabBarInactiveTintColor: '#696969',
                         tabBarIcon: () => {
                           return (
                             activeTasksIcon
@@ -206,10 +204,10 @@ export default function App() {
                         tabBarLabelStyle: {
                           fontSize: 11
                         },
-                        tabBarInactiveBackgroundColor: '#696969',
-                        tabBarActiveBackgroundColor: '#D3D3D3',
-                        tabBarActiveTintColor: '#696969',
-                        tabBarInactiveTintColor: 'white',
+                        tabBarInactiveBackgroundColor: '#D3D3D3',
+                        tabBarActiveBackgroundColor: '#696969',
+                        tabBarActiveTintColor: 'white',
+                        tabBarInactiveTintColor: '#696969',
                         tabBarIcon: () => {
                           return (
                             completedTasksIcon
